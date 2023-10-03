@@ -3,7 +3,7 @@ package world;
 /**
  * Represents an item that can be found in a space.
  */
-public class MyWorldItem implements ItemInterface {
+public class MyWorldItem implements Item {
   private int roomIndex;
   private int damage;
   private String name;

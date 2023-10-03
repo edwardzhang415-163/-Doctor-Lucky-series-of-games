@@ -3,7 +3,7 @@ package world;
 /**
  * This interface represents an item that can be found in a space.
  */
-public interface ItemInterface {
+public interface Item {
 
   /**
    * Gets the index of the room where the item can be found.

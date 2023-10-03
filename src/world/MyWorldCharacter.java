@@ -3,7 +3,7 @@ package world;
 /**
  * Represents a character in the game.
  */
-public class MyWorldCharacter implements CharacterInterface {
+public class MyWorldCharacter implements Character {
   private static final int startIndex = 0; // 常量 startIndex
   private int maxIndex; // 字段 maxIndex
   private int health;

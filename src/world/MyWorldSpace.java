@@ -6,15 +6,15 @@ import java.util.List;
 /**
  * Represents a space or room in the game world.
  */
-public class MyWorldSpace implements SpaceInterface {
+public class MyWorldSpace implements Space {
 
   private int upperLeftRow;
   private int upperLeftCol;
   private int lowerRightRow;
   private int lowerRightCol;
   private String name;
-  private List<SpaceInterface> neighbors;
-  private List<ItemInterface> items;
+  private List<Space> neighbors;
+  private List<Item> items;
 
   /**
    * Creates a new space with the specified coordinates, name, neighbors, and items.
@@ -26,6 +26,9 @@ public class MyWorldSpace implements SpaceInterface {
    * @param nameN          The name of the space.
    */
   public MyWorldSpace(int upperLeftRowN, int upperLeftColN, int lowerRightRowN, int lowerRightColN, String nameN) {
+    if (upperLeftRowN < lowerRightRowN || upperLeftColN > lowerRightColN) {
+      throw new IllegalArgumentException("Invalid space coordinates.");
+    }
     this.upperLeftRow = upperLeftRowN;
     this.upperLeftCol = upperLeftColN;
     this.lowerRightRow = lowerRightRowN;
@@ -61,20 +64,28 @@ public class MyWorldSpace implements SpaceInterface {
   }
 
   @Override
-  public List<SpaceInterface> getNeighbors() {
+  public List<Space> getNeighbors() {
     return neighbors;
   }
 
   @Override
-  public List<ItemInterface> getItems() {
+  public List<Item> getItems() {
     return items;
   }
 
   @Override
-  public boolean isNeighbor(SpaceInterface other) {
+  public boolean isNeighbor(Space other) {
     // Implement the logic to check if this space is a neighbor of the other space.
-    // ...
-    return false;
+    boolean lowerNeighbor =this.getUpperLeftRow() == other.getLowerRightRow() &&
+            this.getLowerRightCol() > this.getUpperLeftCol() && this.getUpperLeftCol() < this.getUpperLeftCol();
+    boolean upperNeighbor =this.getLowerRightRow() == other.getUpperLeftRow() &&
+            this.getLowerRightCol() > this.getUpperLeftCol() && this.getUpperLeftCol() < this.getUpperLeftCol();
+    boolean leftNeighbor =this.getLowerRightCol() == other.getUpperLeftCol() &&
+            this.getUpperLeftRow() > this.getLowerRightRow() && this.getLowerRightCol() < this.getUpperLeftRow();
+    boolean rightNeighbor =this.getUpperLeftCol() == other.getLowerRightCol() &&
+            this.getUpperLeftRow() > this.getLowerRightRow() && this.getLowerRightCol() < this.getUpperLeftRow();
+
+    return lowerNeighbor || upperNeighbor || leftNeighbor || rightNeighbor;
   }
 
   /**
@@ -83,7 +94,7 @@ public class MyWorldSpace implements SpaceInterface {
    * @param neighbor The neighboring space to add.
    */
   @Override
-  public void addNeighbor(SpaceInterface neighbor) {
+  public void addNeighbor(Space neighbor) {
     neighbors.add(neighbor);
   }
 
@@ -93,7 +104,7 @@ public class MyWorldSpace implements SpaceInterface {
    * @param item The item to add to the space.
    */
   @Override
-  public void addItem(ItemInterface item) {
+  public void addItem(Item item) {
     items.add(item);
   }
 

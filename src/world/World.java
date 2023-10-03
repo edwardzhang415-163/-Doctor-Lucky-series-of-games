@@ -1,26 +1,32 @@
 package world;
 
+import java.awt.image.BufferedImage;
 import java.util.List;
 
 /**
  * Represents the game world interface where spaces, items, and characters are placed.
  */
-public interface WorldInterface {
+public interface World {
+
+  public int getNumRows();
+  public int getNumCols();
   /**
    * Get all the spaces in the game world.
    *
    * @return List of spaces.
    */
-  List<SpaceInterface> getSpaces();
+  List<Space> getSpaces();
 
   /**
    * Get the character in the game world.
    *
    * @return The character.
    */
-  CharacterInterface getCharacter();
+  Character getCharacter();
 
-  public List<ItemInterface> getItems();
+  public List<Item> getItems();
+
+  public BufferedImage createWorldMapImage();
 
 }
 

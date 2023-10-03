@@ -6,7 +6,7 @@ import java.util.List;
  * This interface represents a space in the game world. Spaces have coordinates,
  * a name, neighboring spaces, and items that can be found in them.
  */
-public interface SpaceInterface {
+public interface Space {
 
   /**
    * Gets the name of the space.
@@ -48,14 +48,14 @@ public interface SpaceInterface {
    *
    * @return A list of neighboring spaces.
    */
-  List<SpaceInterface> getNeighbors();
+  List<Space> getNeighbors();
 
   /**
    * Gets the list of items in the space.
    *
    * @return A list of items in the space.
    */
-  List<ItemInterface> getItems();
+  List<Item> getItems();
 
   /**
    * Checks if this space is a neighbor of another space.
@@ -63,21 +63,21 @@ public interface SpaceInterface {
    * @param other The space to check for adjacency.
    * @return True if this space is a neighbor of the other space, false otherwise.
    */
-  boolean isNeighbor(SpaceInterface other);
+  boolean isNeighbor(Space other);
 
   /**
    * Adds a neighboring space to this space.
    *
    * @param neighbor The neighboring space to add.
    */
-  void addNeighbor(SpaceInterface neighbor);
+  void addNeighbor(Space neighbor);
 
   /**
    * Adds an item to this space.
    *
    * @param item The item to add to the space.
    */
-  void addItem(ItemInterface item);
+  void addItem(Item item);
 
   // Other possible space-related interface methods can be documented here.
 }

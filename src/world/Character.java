@@ -3,7 +3,7 @@ package world;
 /**
  * This interface represents a character in the game.
  */
-public interface CharacterInterface {
+public interface Character {
 
   /**
    * Gets the health of the character.
