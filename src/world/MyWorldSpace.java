@@ -2,11 +2,13 @@ package world;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+
 
 /**
  * Represents a space or room in the game world.
  */
-public class MyWorldSpace implements Space {
+public class MyWorldSpace extends MyWorld implements Space {
 
   private int upperLeftRow;
   private int upperLeftCol;
@@ -108,6 +110,36 @@ public class MyWorldSpace implements Space {
     items.add(item);
   }
 
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (o == null || getClass() != o.getClass()) return false;
+    MyWorldSpace that = (MyWorldSpace) o;
+    return upperLeftRow == that.upperLeftRow &&
+            upperLeftCol == that.upperLeftCol &&
+            lowerRightRow == that.lowerRightRow &&
+            lowerRightCol == that.lowerRightCol &&
+            Objects.equals(name, that.name) &&
+            Objects.equals(neighbors, that.neighbors) &&
+            Objects.equals(items, that.items);
+  }
 
+  @Override
+  public int hashCode() {
+    return Objects.hash(upperLeftRow, upperLeftCol, lowerRightRow, lowerRightCol, name, neighbors, items);
+  }
+
+  @Override
+  public String toString() {
+    return "MyWorldSpace{" +
+            "upperLeftRow=" + upperLeftRow +
+            ", upperLeftCol=" + upperLeftCol +
+            ", lowerRightRow=" + lowerRightRow +
+            ", lowerRightCol=" + lowerRightCol +
+            ", name='" + name + '\'' +
+            ", neighbors=" + neighbors +
+            ", items=" + items +
+            '}';
+  }
 }
 

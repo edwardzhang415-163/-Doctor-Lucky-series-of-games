@@ -1,5 +1,7 @@
 package world;
 
+import java.util.Objects;
+
 /**
  * Represents a character in the game.
  */
@@ -91,6 +93,30 @@ public class MyWorldCharacter implements Character {
     }
     currentRoomIndex = newRoomIndex;
   }
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (o == null || getClass() != o.getClass()) return false;
+    MyWorldCharacter that = (MyWorldCharacter) o;
+    return health == that.health &&
+            currentRoomIndex == that.currentRoomIndex &&
+            maxIndex == that.maxIndex &&
+            Objects.equals(name, that.name);
+  }
 
+  @Override
+  public int hashCode() {
+    return Objects.hash(health, name, currentRoomIndex, maxIndex);
+  }
+
+  @Override
+  public String toString() {
+    return "MyWorldCharacter{" +
+            "health=" + health +
+            ", name='" + name + '\'' +
+            ", currentRoomIndex=" + currentRoomIndex +
+            ", maxIndex=" + maxIndex +
+            '}';
+  }
 }
 

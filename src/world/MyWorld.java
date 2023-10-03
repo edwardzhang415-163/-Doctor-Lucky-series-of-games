@@ -3,6 +3,7 @@ package world;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Represents the game world where spaces, items, and characters are placed.
@@ -182,6 +183,34 @@ public class MyWorld implements World {
         }
       }
     }
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (o == null || getClass() != o.getClass()) return false;
+    MyWorld myWorld = (MyWorld) o;
+    return numRows == myWorld.numRows &&
+            numCols == myWorld.numCols &&
+            Objects.equals(spaces, myWorld.spaces) &&
+            Objects.equals(character, myWorld.character) &&
+            Objects.equals(items, myWorld.items);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(numRows, numCols, spaces, character, items);
+  }
+
+  @Override
+  public String toString() {
+    return "MyWorld{" +
+            "numRows=" + numRows +
+            ", numCols=" + numCols +
+            ", spaces=" + spaces +
+            ", character=" + character +
+            ", items=" + items +
+            '}';
   }
 }
 
