@@ -1,4 +1,4 @@
-package world;
+package src.world;
 
 /**
  * This interface represents a character in the game.
@@ -37,6 +37,6 @@ public interface Character {
 
   public void setMaxIndex(int maxIndex);
 
-  public void moveSpace(int delta);
+  public int moveSpace();
 }
 

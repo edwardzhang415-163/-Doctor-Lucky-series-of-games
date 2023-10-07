@@ -1,11 +1,11 @@
-package world;
+package src.world;
 
 import java.util.Objects;
 
 /**
  * Represents an item that can be found in a space.
  */
-public class MyWorldItem extends MyWorldSpace implements Item {
+public class MyWorldItem  implements Item {
   private int roomIndex;
   private int damage;
   private String name;
@@ -40,12 +40,16 @@ public class MyWorldItem extends MyWorldSpace implements Item {
 
   @Override
   public boolean equals(Object o) {
-    if (this == o) return true;
-    if (o == null || getClass() != o.getClass()) return false;
+    if (this == o) {
+      return true;
+    }
+    if (o == null || getClass() != o.getClass()) {
+      return false;
+    }
     MyWorldItem that = (MyWorldItem) o;
-    return roomIndex == that.roomIndex &&
-            damage == that.damage &&
-            Objects.equals(name, that.name);
+    return roomIndex == that.roomIndex
+            && damage == that.damage
+            && Objects.equals(name, that.name);
   }
 
   @Override
@@ -55,10 +59,10 @@ public class MyWorldItem extends MyWorldSpace implements Item {
 
   @Override
   public String toString() {
-    return "MyWorldItem{" +
-            "roomIndex=" + roomIndex +
-            ", damage=" + damage +
-            ", name='" + name + '\'' +
-            '}';
+    return "MyWorldItem{"
+            + "roomIndex=" + roomIndex
+            + ", damage=" + damage
+            + ", name='" + name + '\''
+            + '}';
   }
 }

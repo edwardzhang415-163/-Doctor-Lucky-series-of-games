@@ -1,4 +1,4 @@
-package world;
+package src.world;
 
 import java.util.Objects;
 
@@ -13,22 +13,22 @@ public class MyWorldCharacter implements Character {
   private int currentRoomIndex;
 
   /**
-   * Creates a new character with the specified health, name, current room index, and maximum room index.
+   * Creates a new character with the specified health.
    *
-   * @param health          The health of the character.
-   * @param name            The name of the character.
-   * @param currentRoomIndex The initial room index where the character is located.
-   * @param maxIndex        The maximum room index allowed for the character.
+   * @param healthN           The health of the character.
+   * @param nameN            The name of the character.
+   * @param currentRoomIndexN The initial room index where the character is located.
+   * @param maxIndexN         The maximum room index allowed for the character.
    * @throws IllegalArgumentException if maxIndex is less than startIndex.
    */
-  public MyWorldCharacter(int health, String name, int currentRoomIndex, int maxIndex) {
+  public MyWorldCharacter(int healthN, String nameN, int currentRoomIndexN, int maxIndexN) {
     if (maxIndex < startIndex) {
       throw new IllegalArgumentException("maxIndex must be greater than or equal to startIndex.");
     }
-    this.health = health;
-    this.name = name;
-    this.currentRoomIndex = currentRoomIndex;
-    this.maxIndex = maxIndex;
+    this.health = healthN;
+    this.name = nameN;
+    this.currentRoomIndex = currentRoomIndexN;
+    this.maxIndex = maxIndexN;
   }
 
   /**
@@ -45,15 +45,15 @@ public class MyWorldCharacter implements Character {
   /**
    * Sets the maximum room index allowed for the character.
    *
-   * @param maxIndex The maximum room index.
+   * @param maxIndexN The maximum room index.
    * @throws IllegalArgumentException if maxIndex is less than startIndex.
    */
   @Override
-  public void setMaxIndex(int maxIndex) {
-    if (maxIndex < startIndex) {
+  public void setMaxIndex(int maxIndexN) {
+    if (maxIndexN < startIndex) {
       throw new IllegalArgumentException("maxIndex must be greater than or equal to startIndex.");
     }
-    this.maxIndex = maxIndex;
+    this.maxIndex = maxIndexN;
   }
 
   @Override
@@ -82,26 +82,32 @@ public class MyWorldCharacter implements Character {
   /**
    * Moves the character's current room index by the specified delta.
    *
-   * @param delta The change in room index (can be positive or negative).
-   * @throws IllegalArgumentException if the resulting room index is less than startIndex or greater than maxIndex.
+   *
+   * @throws IllegalArgumentException if the resulting room index greater than maxIndex.
    */
   @Override
-  public void moveSpace(int delta) {
-    int newRoomIndex = currentRoomIndex + delta;
-    if (newRoomIndex < startIndex || newRoomIndex > maxIndex) {
-      throw new IllegalArgumentException("Invalid room index.");
+  public int moveSpace() {
+    int newRoomIndex = currentRoomIndex + 1;
+    if (newRoomIndex > maxIndex) {
+      newRoomIndex = startIndex;
     }
     currentRoomIndex = newRoomIndex;
+    return currentRoomIndex;
   }
+
   @Override
   public boolean equals(Object o) {
-    if (this == o) return true;
-    if (o == null || getClass() != o.getClass()) return false;
+    if (this == o) {
+      return true;
+    }
+    if (o == null || getClass() != o.getClass()) {
+      return false;
+    }
     MyWorldCharacter that = (MyWorldCharacter) o;
-    return health == that.health &&
-            currentRoomIndex == that.currentRoomIndex &&
-            maxIndex == that.maxIndex &&
-            Objects.equals(name, that.name);
+    return health == that.health
+            && currentRoomIndex == that.currentRoomIndex
+            && maxIndex == that.maxIndex
+            && Objects.equals(name, that.name);
   }
 
   @Override
@@ -111,12 +117,11 @@ public class MyWorldCharacter implements Character {
 
   @Override
   public String toString() {
-    return "MyWorldCharacter{" +
-            "health=" + health +
-            ", name='" + name + '\'' +
-            ", currentRoomIndex=" + currentRoomIndex +
-            ", maxIndex=" + maxIndex +
-            '}';
+    return "MyWorldCharacter{"
+            + "health=" + health
+            + ", name='" + name + '\''
+            + ", currentRoomIndex=" + currentRoomIndex
+            + '}';
   }
 }
 

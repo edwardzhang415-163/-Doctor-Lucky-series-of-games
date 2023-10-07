@@ -1,9 +1,9 @@
-package world;
+package src.world;
 
 import java.util.List;
 
 /**
- * This interface represents a space in the game world. Spaces have coordinates,
+ * This interface represents a space in the game src.world. Spaces have coordinates,
  * a name, neighboring spaces, and items that can be found in them.
  */
 public interface Space {
