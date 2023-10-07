@@ -40,9 +40,9 @@ The game world is loaded from a text file with the following format:
 - `<item_i_name>` is the name of the `i`th item.
 
 ## Jar Instruction
- Please create res directory in the same directory as the .jar file
- and put the mansion.txt  in the res directory
- see examplerun.txt
+ -Please create res directory in the same directory as the .jar file.
+ -And put the mansion.txt  in the res directory.
+ -See examplerun.txt.
 
 
 
