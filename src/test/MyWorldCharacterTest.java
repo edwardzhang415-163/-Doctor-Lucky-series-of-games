@@ -1,13 +1,19 @@
 package test;
 
+import static org.junit.Assert.assertEquals;
+
 import org.junit.Test;
 import src.world.MyWorldCharacter;
 
-import static org.junit.Assert.*;
+
+
+
 /**
- * test for MyWorldCharacter
+ * test for MyWorldCharacter.
  */
+
 public class MyWorldCharacterTest {
+  
   /*
    * test for getMaxIndex()
    */

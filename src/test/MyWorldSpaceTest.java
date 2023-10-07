@@ -1,15 +1,17 @@
 package test;
 
+import static org.junit.Assert.assertEquals;
+
 import org.junit.Test;
 import src.world.MyWorldSpace;
 
-import static org.junit.Assert.*;
-/*
- * test for MyWorldSpace
+/**
+ * test for MyWorldSpace.
  */
+
 public class MyWorldSpaceTest {
   /*
-   * test for getName()
+   * test for getName().
    */
   @Test
   public void testGetName() {

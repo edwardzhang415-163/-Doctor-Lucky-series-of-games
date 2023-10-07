@@ -1,10 +1,12 @@
 package test;
 
+import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.assertNotNull;
+
 import org.junit.Test;
 import src.world.MyWorld;
 
-import static org.junit.Assert.assertNotEquals;
-import static org.junit.Assert.assertNotNull;
+
 
 /**
  * test for MyWorld.
@@ -88,7 +90,7 @@ public class MyWorldTest {
    */
   @Test
   public void testGetSpace() {
-    MyWorld world = new MyWorld( "res\\mansion.txt");
+    MyWorld world = new MyWorld("res\\mansion.txt");
     assertNotNull(world.getSpace(0));
   }
 

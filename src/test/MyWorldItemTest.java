@@ -1,12 +1,15 @@
 package test;
 
-import org.junit.Test;
-import src.world.MyWorldItem;
 
 import static org.junit.Assert.assertEquals;
 
-/*
-  * test for MyWorldItem
+import org.junit.Test;
+import src.world.MyWorldItem;
+
+
+
+/**
+  * test for MyWorldItem.
  */
 public class MyWorldItemTest {
   /*
