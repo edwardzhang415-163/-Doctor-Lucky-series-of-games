@@ -3,7 +3,8 @@ package test;
 import org.junit.Test;
 import src.world.MyWorld;
 
-import static org.junit.Assert.;
+import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.assertNotNull;
 
 /**
  * test for MyWorld.
