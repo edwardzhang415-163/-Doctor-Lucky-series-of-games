@@ -39,3 +39,10 @@ The game world is loaded from a text file with the following format:
 - `<item_i_damage>` is the amount of damage the `i`th item can do if used to attack the character.
 - `<item_i_name>` is the name of the `i`th item.
 
+## Jar Instruction
+ Please create res directory in the same directory as the .jar file
+ and put the mansion.txt  in the res directory
+ see examplerun.txt
+
+
+
