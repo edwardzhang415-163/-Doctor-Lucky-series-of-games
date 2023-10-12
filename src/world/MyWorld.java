@@ -160,8 +160,8 @@ public class MyWorld implements World {
     for (Space space : spacesN) {
       int upperLeftX = space.getUpperLeftCol() * cellSize;
       int upperLeftY = space.getUpperLeftRow() * cellSize;
-      int width = space.getLowerRightCol() * cellSize - upperLeftX;
-      int height = space.getLowerRightRow() * cellSize - upperLeftY;
+      int width = space.getLowerRightCol() * cellSize - upperLeftX - 1;
+      int height = space.getLowerRightRow() * cellSize - upperLeftY - 1;
       String spaceName = space.getName();
 
       // Draw space as a rectangle with black border and white fill color
