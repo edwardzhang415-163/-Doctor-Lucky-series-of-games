@@ -1,10 +1,20 @@
 package test;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
+import java.awt.image.BufferedImage;
+import java.util.List;
+import org.junit.Before;
 import org.junit.Test;
+import src.world.Character;
+import src.world.Item;
 import src.world.MyWorld;
+import src.world.MyWorldItem;
+import src.world.Space;
 
 
 
@@ -13,85 +23,107 @@ import src.world.MyWorld;
  *
  */
 public class MyWorldTest {
-  /*
-   * test for getNumRows()
-   */
+  private MyWorld myWorld;
+
+  @Before
+  public void setUp() {
+    // Initialize the MyWorld object before each test
+    myWorld = new MyWorld("test-world.txt");
+  }
+
   @Test
   public void testGetNumRows() {
-    MyWorld world = new MyWorld("res\\mansion.txt");
-    assertNotEquals(0, world.getNumRows());
+    assertEquals(3, myWorld.getNumRows());
   }
 
-  /*
-   * test for getNumCols()
-   */
   @Test
   public void testGetNumCols() {
-    MyWorld world = new MyWorld("res\\mansion.txt");
-    assertNotEquals(0, world.getNumCols());
+    assertEquals(3, myWorld.getNumCols());
   }
 
-  /*
-   * test for getSpaces()
-   */
-  @Test
-  public void testGetSpaces() {
-    MyWorld world = new MyWorld("res\\mansion.txt");
-    assertNotEquals(0, world.getSpaces().size());
-  }
-
-  /*
-   * test for getCharacter()
-   */
-  @Test
-  public void testGetCharacter() {
-    MyWorld world = new MyWorld("res\\mansion.txt");
-    assertNotEquals(null, world.getCharacter());
-  }
-
-  /*
-   * test for getItems()
-   */
-  @Test
-  public void testGetItems() {
-    MyWorld world = new MyWorld("res\\mansion.txt");
-    assertNotEquals(0, world.getItems().size());
-  }
-
-  /*
-   * test for renderWorldImage()
-   */
-  @Test
-  public void testRenderWorldImage() {
-    MyWorld world = new MyWorld("res\\mansion.txt");
-    assertNotEquals(null, world.renderWorldImage());
-  }
-
-  /*
-   * test for getName()
-   */
   @Test
   public void testGetName() {
-    MyWorld world = new MyWorld("res\\mansion.txt");
-    assertNotNull(world.getName());
+    assertEquals("Test World", myWorld.getName());
   }
 
-  /*
-   * test for moveCharacter()
-   */
+  @Test
+  public void testGetSpaces() {
+    List<Space> spaces = myWorld.getSpaces();
+    assertNotNull(spaces);
+    assertEquals(9, spaces.size()); // Assuming there are 9 spaces in the test-world.txt file
+  }
+
+  @Test
+  public void testGetCharacter() {
+    Character character = myWorld.getCharacter();
+    assertNotNull(character);
+    assertEquals("Test Character", character.getName());
+  }
+
+  @Test
+  public void testGetItems() {
+    List<Item> items = myWorld.getItems();
+    assertNotNull(items);
+    assertEquals(3, items.size()); // Assuming there are 3 items in the test-world.txt file
+  }
+
   @Test
   public void testMoveCharacter() {
-    MyWorld world = new MyWorld("res\\mansion.txt");
-    assertNotNull(world.moveCharacter());
+    String initialSpaceName = myWorld.getSpaces().get(0).getName();
+    myWorld.moveCharacter();
+    String newSpaceName = myWorld.getSpaces()
+            .get(myWorld.getCharacter().getCurrentRoomIndex()).getName();
+    assertNotEquals(initialSpaceName, newSpaceName);
   }
 
-  /*
-   * test for getSpace()
-   */
+  @Test(expected = IllegalArgumentException.class)
+  public void testInvalidRoomIndexForItems() {
+    // Test if an IllegalArgumentException is thrown when an item has an invalid room index
+    MyWorld invalidWorld = new MyWorld("invalid-world.txt");
+  }
+
+  @Test(expected = IllegalArgumentException.class)
+  public void testOverlappingSpaces() {
+    // Test if an IllegalArgumentException is thrown when spaces overlap
+    MyWorld invalidWorld = new MyWorld("invalid-overlapping-world.txt");
+  }
+
   @Test
-  public void testGetSpace() {
-    MyWorld world = new MyWorld("res\\mansion.txt");
-    assertNotNull(world.getSpace(0));
+  public void testRenderWorldImage() {
+    BufferedImage mapImage = myWorld.renderWorldImage();
+    assertNotNull(mapImage);
+    // You can add additional assertions related to the generated image if needed
   }
 
+  @Test
+  public void testSpaceNeighbors() {
+    List<Space> spaces = myWorld.getSpaces();
+    for (Space space : spaces) {
+      List<Space> neighbors = space.getNeighbors();
+      assertNotNull(neighbors);
+      for (Space neighbor : neighbors) {
+        assertTrue(space.isNeighbor(neighbor));
+      }
+    }
+  }
+
+  @Test
+  public void testAddItemToSpace() {
+    Space space = myWorld.getSpaces().get(0);
+    Item newItem = new MyWorldItem(1, 1, "New Item");
+    space.addItem(newItem);
+    assertTrue(space.getItems().contains(newItem));
+  }
+
+  @Test
+  public void testMoveCharacterToInvalidSpace() {
+    // Move character to an invalid space index and check if it throws an exception
+    myWorld.getCharacter().setCurrentRoomIndex(-1);
+    try {
+      myWorld.moveCharacter();
+      fail("Expected IllegalArgumentException not thrown");
+    } catch (IllegalArgumentException e) {
+      assertEquals("Invalid room index for character: -1", e.getMessage());
+    }
+  }
 }

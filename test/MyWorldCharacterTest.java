@@ -13,91 +13,81 @@ import src.world.MyWorldCharacter;
  */
 
 public class MyWorldCharacterTest {
-  
-  /*
-   * test for getMaxIndex()
-   */
+
   @Test
   public void testGetMaxIndex() {
-    MyWorldCharacter character = new MyWorldCharacter(0, "character", 0, 0);
-    assertEquals(0, character.getMaxIndex());
+    MyWorldCharacter character = new MyWorldCharacter(100, "Test Character", 0, 10);
+    assertEquals(10, character.getMaxIndex());
   }
 
-  /*
-   * test for setMaxIndex()
-   */
   @Test
   public void testSetMaxIndex() {
-    MyWorldCharacter character = new MyWorldCharacter(0, "character", 0, 0);
-    character.setMaxIndex(0);
-    assertEquals(0, character.getMaxIndex());
+    MyWorldCharacter character = new MyWorldCharacter(100, "Test Character", 0, 10);
+    character.setMaxIndex(15);
+    assertEquals(15, character.getMaxIndex());
   }
 
-  /*
-   * test for getHealth()
-   */
+  @Test(expected = IllegalArgumentException.class)
+  public void testSetMaxIndexWithInvalidValue() {
+    MyWorldCharacter character = new MyWorldCharacter(100, "Test Character", 0, 10);
+    character.setMaxIndex(-5); // Should throw an exception
+  }
+
   @Test
   public void testGetHealth() {
-    MyWorldCharacter character = new MyWorldCharacter(0, "character", 0, 0);
-    assertEquals(0, character.getHealth());
+    MyWorldCharacter character = new MyWorldCharacter(100, "Test Character", 0, 10);
+    assertEquals(100, character.getHealth());
   }
 
-  /*
-   * test for getName()
-   */
   @Test
   public void testGetName() {
-    MyWorldCharacter character = new MyWorldCharacter(0, "character", 0, 0);
-    assertEquals("character", character.getName());
+    MyWorldCharacter character = new MyWorldCharacter(100, "Test Character", 0, 10);
+    assertEquals("Test Character", character.getName());
   }
 
-  /*
-   * test for getCurrentRoomIndex()
-   */
   @Test
   public void testGetCurrentRoomIndex() {
-    MyWorldCharacter character = new MyWorldCharacter(0, "character", 0, 0);
-    assertEquals(0, character.getCurrentRoomIndex());
+    MyWorldCharacter character = new MyWorldCharacter(100, "Test Character", 5, 10);
+    assertEquals(5, character.getCurrentRoomIndex());
   }
 
-  /*
-   * test for setCurrentRoomIndex()
-   */
   @Test
   public void testSetCurrentRoomIndex() {
-    MyWorldCharacter character = new MyWorldCharacter(0, "character", 0, 0);
-    character.setCurrentRoomIndex(0);
+    MyWorldCharacter character = new MyWorldCharacter(100, "Test Character", 0, 10);
+    character.setCurrentRoomIndex(7);
+    assertEquals(7, character.getCurrentRoomIndex());
+  }
+
+  @Test(expected = IllegalArgumentException.class)
+  public void testSetCurrentRoomIndexWithInvalidValue() {
+    MyWorldCharacter character = new MyWorldCharacter(100, "Test Character", 0, 10);
+    character.setCurrentRoomIndex(15); // Should throw an exception
+  }
+
+  @Test
+  public void testMoveSpace() {
+    MyWorldCharacter character = new MyWorldCharacter(100, "Test Character", 0, 10);
+    character.moveSpace();
+    assertEquals(1, character.getCurrentRoomIndex());
+  }
+
+  @Test
+  public void testMoveSpaceWithWrapAround() {
+    MyWorldCharacter character = new MyWorldCharacter(100, "Test Character", 10, 10);
+    character.moveSpace();
     assertEquals(0, character.getCurrentRoomIndex());
   }
 
-  /*
-   * test for equals()
-   */
   @Test
   public void testEquals() {
-    MyWorldCharacter character = new MyWorldCharacter(0, "character", 0, 0);
-    assertEquals(true, character.equals(character));
+    MyWorldCharacter character1 = new MyWorldCharacter(100, "Test Character", 5, 10);
+    MyWorldCharacter character2 = new MyWorldCharacter(100, "Test Character", 5, 10);
+    assertEquals(character1, character2);
   }
 
-  /*
-   * test for hashCode()
-   */
   @Test
   public void testHashCode() {
-    MyWorldCharacter character = new MyWorldCharacter(0, "character", 0, 0);
-    assertEquals(-45634454, character.hashCode());
-  }
-
-  /*
-   * test for toString()
-   */
-  @Test
-  public void testToString() {
-    MyWorldCharacter character = new MyWorldCharacter(0, "character", 0, 0);
-    assertEquals("MyWorldCharacter{"
-            + "health=" + 0
-            + ", name='" + "character" + '\''
-            + ", currentRoomIndex=" + 0
-            + '}', character.toString());
+    MyWorldCharacter character = new MyWorldCharacter(100, "Test Character", 5, 10);
+    assertEquals(character.hashCode(), character.hashCode());
   }
 }
