@@ -59,10 +59,7 @@ public class MyWorldItem  implements Item {
 
   @Override
   public String toString() {
-    return "MyWorldItem{"
-            + "roomIndex=" + roomIndex
-            + ", damage=" + damage
-            + ", name='" + name + '\''
-            + '}';
+    return String.format("MyWorldItem{roomIndex=%d, damage=%d, name='%s'}",
+        roomIndex, damage, name);
   }
 }

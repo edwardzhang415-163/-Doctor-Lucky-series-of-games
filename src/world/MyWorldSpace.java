@@ -18,7 +18,7 @@ public class MyWorldSpace  implements Space {
   private String name;
   private List<Space> neighbors;
   private List<Item> items;
-
+  private List<Player> players;
   /**
    * Creates a new space with the specified coordinates, name, neighbors, and items.
    *
@@ -117,6 +117,32 @@ public class MyWorldSpace  implements Space {
   }
 
   @Override
+  public String revomeItem(Item item) {
+    for (Item i : items) {
+      if (i.getName().equals(item.getName())) {
+        items.remove(i);
+        return i.getName();
+      }
+    }
+    return "there is no such item in this space";
+  }
+
+  @Override
+  public String addPlayer(Player player) {
+    players.add(player);
+    return String.format("player %s is added to %s", player.getName(), this.getName());
+  }
+  @Override
+  public String removePlayer(Player player) {
+    for (Player p : players) {
+      if (p.getName().equals(player.getName())) {
+        players.remove(p);
+        return String.format("player %s is removed from %s", player.getName(), this.getName());
+      }
+    }
+    return String.format("player %s is removed from %s", player.getName(), this.getName());
+  }
+  @Override
   public boolean equals(Object o) {
     if (this == o) {
       return true;
@@ -142,18 +168,20 @@ public class MyWorldSpace  implements Space {
 
   @Override
   public String toString() {
-    return "MyWorldSpace{"
-            + "\nname='"
-            + name
-            + "\nneighbors="
-            + neighbors.stream()
-            .map(Space::getName)
-            .collect(Collectors.joining(", "))
-            + "\nitems="
-            + items.stream()
-            .map(Item::getName)
-            .collect(Collectors.joining(", "))
-            + '}';
+    String neighborsList = neighbors.stream()
+        .map(Space::getName)
+        .collect(Collectors.joining(", "));
+
+    String itemsList = items.stream()
+        .map(Item::getName)
+        .collect(Collectors.joining(", "));
+
+    String playersList = players.stream()
+            .map(Player::getName)
+            .collect(Collectors.joining(", "));
+
+    return String.format("MyWorldSpace{\nname='%s'\nneighbors=%s\nitems=%s\n players=%s\n}",
+        name, neighborsList, itemsList, playersList);
   }
 }
 

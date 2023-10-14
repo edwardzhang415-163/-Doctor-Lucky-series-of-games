@@ -117,11 +117,8 @@ public class MyWorldCharacter implements Character {
 
   @Override
   public String toString() {
-    return "MyWorldCharacter{"
-            + "health=" + health
-            + ", name='" + name + '\''
-            + ", currentRoomIndex=" + currentRoomIndex
-            + '}';
+    return String.format("MyWorldCharacter{health=%d, name='%s', currentRoomIndex=%d}",
+        health, name, currentRoomIndex);
   }
 }
 

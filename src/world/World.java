@@ -35,5 +35,7 @@ public interface World {
   public String moveCharacter();
 
   Space getSpace(int spaceIndex);
+
+  public void addPlayer(String playerName, int initialSpaceIndex, boolean isBot);
 }
 

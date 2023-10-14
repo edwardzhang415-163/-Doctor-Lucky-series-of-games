@@ -79,5 +79,9 @@ public interface Space {
    */
   void addItem(Item item);
 
-  // Other possible space-related interface methods can be documented here.
+  public String revomeItem(Item item);
+
+  public String removePlayer(Player player);
+  
+  public String addPlayer(Player player);
 }

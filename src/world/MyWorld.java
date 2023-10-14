@@ -27,6 +27,7 @@ public class MyWorld implements World {
   private List<Space> spaces; // Stores all the space information
   private Character character; // Stores character information
   private List<Item> items;
+  private List<Player> players;
 
   /**
    * Constructs the game src.world with the provided spaces, items, and character.
@@ -94,6 +95,7 @@ public class MyWorld implements World {
     deployItems();
     // Connect adjacent spaces
     connectAdjacentSpaces();
+    this.players = new ArrayList<>();
   }
 
   @Override
@@ -199,6 +201,24 @@ public class MyWorld implements World {
     return spaces.get(spaceIndex);
   }
 
+  @Override
+  public void addPlayer(String playerName, int initialSpaceIndex, boolean isBot) {
+    if (initialSpaceIndex >= 0 && initialSpaceIndex < spaces.size()) {
+      Player player;
+      Space initialSpace = spaces.get(initialSpaceIndex);
+      if (isBot) {
+        player = new BotPlayer(playerName, initialSpace);
+      } else {
+        player = new MyWorldPlayer(playerName, initialSpace);
+      }
+      initialSpace.addPlayer(player);
+      players.add(player);
+    } else {
+      throw new IllegalArgumentException(String.format("Invalid space index: %d", initialSpaceIndex));
+    }
+  }
+
+
   /**
    *  Add items to corresponding spaces based on room index, handling invalid room indices.
    *
@@ -300,22 +320,16 @@ public class MyWorld implements World {
 
   @Override
   public String toString() {
-    return name + "{"
-           + "\nnumRows="
-           + numRows
-           + "\nnumCols="
-           + numCols
-           + "\nspaces="
-           + spaces.stream()
-            .map(Space::getName)
-            .collect(Collectors.joining(",\n"))
-           + "\ncharacter="
-           + character.getName()
-           + "\nitems="
-           + items.stream()
-            .map(Item::getName)
-            .collect(Collectors.joining(",\n"))
-           + "\n}";
+    String spacesList = spaces.stream()
+        .map(Space::getName)
+        .collect(Collectors.joining(",\n"));
+
+    String itemsList = items.stream()
+        .map(Item::getName)
+        .collect(Collectors.joining(",\n"));
+
+    return String.format("%s{\nnumRows=%d\nnumCols=%d\nspaces=\n%s\ncharacter=%s\nitems=\n%s\n}",
+        name, numRows, numCols, spacesList, character.getName(), itemsList);
   }
 }
 

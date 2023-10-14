@@ -17,11 +17,8 @@ public class Main {
     String path = scanner.nextLine();
     World world = new MyWorld(path);
     System.out.println("Mansion load successfully");
-    world.renderWorldImage();
     System.out.println("Masion name: " + world.getName());
-    System.out.println("character name: " + world.getCharacter().getName());
-    System.out.println("character health: " + world.getCharacter().getHealth());
-    System.out.println("Select option");
+    //controller
     int option = 10;
     while (0 < option) {
       System.out.println("Select option: \n"
