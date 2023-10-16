@@ -1,4 +1,4 @@
-package src.world;
+package src.model;
 
 /**
  * This interface represents an item that can be found in a space.

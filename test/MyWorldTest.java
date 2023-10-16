@@ -10,11 +10,11 @@ import java.awt.image.BufferedImage;
 import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
-import src.world.Character;
-import src.world.Item;
-import src.world.MyWorld;
-import src.world.MyWorldItem;
-import src.world.Space;
+import src.model.Character;
+import src.model.Item;
+import src.model.MyWorld;
+import src.model.MyWorldItem;
+import src.model.Space;
 
 
 

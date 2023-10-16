@@ -1,8 +1,8 @@
-36 30 Doctor Lucky's Mansion
-50 Doctor Lucky
+36 30 Edwardzahng's Mansion
+50 Doctor Zhang
 21
-22 19 23 26 Armory
-16 21 21 28 Billiard Room
+22 19 22 24 Armory
+16 21 21 27 Billiard Room
 28  0 35  5 Carriage House
 12 11 21 20 Dining Hall
 22 13 25 18 Drawing Room
@@ -10,11 +10,11 @@
 28 26 35 29 Green House
 30 20 35 25 Hedge Maze
 16  3 21 10 Kitchen
- 0  3  5  8 Lancaster Room
+ 1  3  5  8 Lancaster Room
  4 23  9 28 Library
- 2  9  7 14 Lilac Room
+ 3  9  7 14 Lilac Room
  2 15  7 22 Master Suite
- 0 23  3 28 Nursery
+ 0 24  3 28 Nursery
 10  5 15 10 Parlor
 28 12 35 19 Piazza
  6  3  9  8 Servants' Quarters

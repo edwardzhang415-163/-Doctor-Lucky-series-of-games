@@ -1,19 +1,21 @@
-package src.world;
+package src.model;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class MyWorldPlayer implements Player {
-  private String name;
-  private List<Item> items;
+  private final String name;
+  private final List<Item> items;
   private Space currentSpace;
-  private int maxItem;
+  private final int maxItem;
 
 
   public MyWorldPlayer(String nameN, Space currentSpaceN) {
     this.name = nameN;
     this.currentSpace = currentSpaceN;
     this.maxItem = 5;
+    this.items = new ArrayList<>();
   }
 
   @Override
@@ -44,7 +46,7 @@ public class MyWorldPlayer implements Player {
   }
 
   @Override
-  public String MoveTo(String nighbourName) {
+  public String moveTo(String nighbourName) {
     List<Space> nighbours = currentSpace.getNeighbors();
     for (Space nighbour : nighbours) {
       if (nighbour.getName().equals(nighbourName)) {
@@ -62,10 +64,22 @@ public class MyWorldPlayer implements Player {
     return String.format("Player %s is in %s. You can go to: %s",
             name, currentSpace.getName(), nighbours);
   }
-
+  @Override
+  public List<Item> getItems() {
+    return items;
+  }
   @Override
   public String doAction() {
     return "";
+  }
+
+  @Override
+  public String toString() {
+    String itemsList = items.stream()
+        .map(Item::getName)
+        .collect(Collectors.joining(", "));
+    return String.format("player{\nname='%s'\nitems=%s\ncurrentSpace=%s\n}",
+        name, itemsList, currentSpace.getName());
   }
 }
 

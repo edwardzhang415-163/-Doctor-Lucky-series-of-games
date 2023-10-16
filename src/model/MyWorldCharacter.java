@@ -1,4 +1,4 @@
-package src.world;
+package src.model;
 
 import java.util.Objects;
 
@@ -9,7 +9,7 @@ public class MyWorldCharacter implements Character {
   private static final int startIndex = 0; // 常量 startIndex
   private int maxIndex; // 字段 maxIndex
   private int health;
-  private String name;
+  private final String name;
   private int currentRoomIndex;
 
   /**
@@ -117,7 +117,7 @@ public class MyWorldCharacter implements Character {
 
   @Override
   public String toString() {
-    return String.format("MyWorldCharacter{health=%d, name='%s', currentRoomIndex=%d}",
+    return String.format("Target{health=%d, name='%s', currentRoomIndex=%d}",
         health, name, currentRoomIndex);
   }
 }

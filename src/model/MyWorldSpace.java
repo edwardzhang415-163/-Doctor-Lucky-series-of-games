@@ -1,4 +1,4 @@
-package src.world;
+package src.model;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,14 +11,14 @@ import java.util.stream.Collectors;
  */
 public class MyWorldSpace  implements Space {
 
-  private int upperLeftRow;
-  private int upperLeftCol;
-  private int lowerRightRow;
-  private int lowerRightCol;
-  private String name;
-  private List<Space> neighbors;
-  private List<Item> items;
-  private List<Player> players;
+  private final int upperLeftRow;
+  private final int upperLeftCol;
+  private final int lowerRightRow;
+  private final int lowerRightCol;
+  private final String name;
+  private  List<Space> neighbors;
+  private  List<Item> items;
+  private  List<Player> players;
   /**
    * Creates a new space with the specified coordinates, name, neighbors, and items.
    *
@@ -40,6 +40,7 @@ public class MyWorldSpace  implements Space {
     this.name = nameN;
     this.neighbors = new ArrayList<>();
     this.items = new ArrayList<>();
+    this.players = new ArrayList<>();
   }
 
   @Override

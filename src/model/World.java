@@ -1,4 +1,4 @@
-package src.world;
+package src.model;
 
 import java.awt.image.BufferedImage;
 import java.util.List;
@@ -34,8 +34,12 @@ public interface World {
 
   public String moveCharacter();
 
-  Space getSpace(int spaceIndex);
+  public Space getSpace(int spaceIndex);
 
-  public void addPlayer(String playerName, int initialSpaceIndex, boolean isBot);
+  public String addPlayer(String playerName, int initialSpaceIndex, boolean isBot);
+
+  public String playerInfo(String playerName);
+
+  public List<Player> getPlayers();
 }
 

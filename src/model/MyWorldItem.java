@@ -1,4 +1,4 @@
-package src.world;
+package src.model;
 
 import java.util.Objects;
 
@@ -6,9 +6,9 @@ import java.util.Objects;
  * Represents an item that can be found in a space.
  */
 public class MyWorldItem  implements Item {
-  private int roomIndex;
-  private int damage;
-  private String name;
+  private final int roomIndex;
+  private final int damage;
+  private final String name;
 
   /**
    * Creates a new item with the specified room index, damage, and name.

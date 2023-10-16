@@ -1,4 +1,6 @@
-package src.world;
+package src.model;
+
+import java.util.List;
 
 public interface Player {
   public String getName();
@@ -7,9 +9,11 @@ public interface Player {
 
   public Space getCurrentSpace();
 
-  public String MoveTo(String nighbourName);
+  public String moveTo(String nighbourName);
 
   public String lookAround();
+
+  public List<Item> getItems();
 
   public String doAction();
 

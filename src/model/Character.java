@@ -1,4 +1,4 @@
-package src.world;
+package src.model;
 
 /**
  * This interface represents a character in the game.

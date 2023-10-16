@@ -7,10 +7,10 @@ import static org.junit.Assert.assertTrue;
 
 import java.util.List;
 import org.junit.Test;
-import src.world.Item;
-import src.world.MyWorldItem;
-import src.world.MyWorldSpace;
-import src.world.Space;
+import src.model.Item;
+import src.model.MyWorldItem;
+import src.model.MyWorldSpace;
+import src.model.Space;
 
 
 /**
