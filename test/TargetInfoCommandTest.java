@@ -1,17 +1,18 @@
 package test;
 
-import org.junit.Before;
-import org.junit.Test;
-import src.controller.command.TargetInfoCommand;
-import src.model.Character;
-import src.model.World;
+import static org.junit.Assert.assertEquals;
 
 import java.io.IOException;
 import java.io.StringWriter;
 import java.util.Scanner;
+import org.junit.Before;
+import org.junit.Test;
+import src.controller.command.TargetInfoCommand;
+import src.model.World;
 
-import static org.junit.Assert.assertEquals;
-
+/**
+ * Tests the TargetInfoCommand.
+ */
 public class TargetInfoCommandTest {
 
   private TargetInfoCommand targetInfoCommand;
@@ -19,6 +20,9 @@ public class TargetInfoCommandTest {
   private StringWriter out;
   private Scanner scanner;
 
+  /**
+   * Sets up the test.
+   */
   @Before
   public void setUp() {
     // Create a mock world for testing

@@ -4,6 +4,9 @@ import java.io.IOException;
 import java.util.Scanner;
 import src.model.World;
 
+/**
+ * Command to add a player to the game.
+ */
 public class AddPlayerCommand implements Command {
   @Override
   public void execute(World world, Scanner scanner, Appendable out) throws IOException {

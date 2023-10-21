@@ -4,6 +4,9 @@ import java.io.IOException;
 import java.util.Scanner;
 import src.model.World;
 
+/**
+ * Command to move the character.
+ */
 public class MoveCharacterCommand implements Command {
   @Override
   public void execute(World world, Scanner scanner, Appendable out) throws IOException {

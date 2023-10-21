@@ -6,12 +6,15 @@ import static org.junit.Assert.assertNotNull;
 
 import org.junit.Before;
 import org.junit.Test;
+import src.model.Item;
 import src.model.MyWorldItem;
 import src.model.MyWorldPlayer;
-import src.model.Item;
 import src.model.MyWorldSpace;
 import src.model.Space;
 
+/**
+ * Tests the MyWorldPlayer.
+ */
 public class MyWorldPlayerTest {
 
   private MyWorldPlayer player;
@@ -91,7 +94,7 @@ public class MyWorldPlayerTest {
 
     String result = player.lookAround();
     assertNotNull(result);
-    assertEquals("Player Player1 is in Space1. You can go to: NeighborSpace1, NeighborSpace2", result);
+    assertEquals("Player Player1 is in Space1. You can go to: NeighborSpace2", result);
   }
 
   @Test

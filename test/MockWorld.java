@@ -331,11 +331,6 @@ public class MockWorld implements World {
   }
 
   @Override
-  public int hashCode() {
-    return Objects.hash(numRows, numCols, spaces, character, items);
-  }
-
-  @Override
   public String toString() {
     String spacesList = spaces.stream()
         .map(Space::getName)

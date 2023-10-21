@@ -1,22 +1,20 @@
 package test;
 
-import org.junit.Before;
-import org.junit.Test;
-import src.controller.command.NextTurnCommand;
-import src.model.Character;
-import src.model.World;
-import src.model.Space;
-import src.model.Item;
-import src.model.Player;
+import static org.junit.Assert.assertEquals;
 
 import java.io.IOException;
 import java.io.StringWriter;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
+import org.junit.Before;
+import org.junit.Test;
+import src.controller.command.NextTurnCommand;
+import src.model.World;
 
-import static org.junit.Assert.assertEquals;
 
+
+/**
+ * Tests the NextTurnCommand.
+ */
 public class NextTurnCommandTest {
 
   private NextTurnCommand nextTurnCommand;
@@ -24,6 +22,9 @@ public class NextTurnCommandTest {
   private StringWriter out;
   private Scanner scanner;
 
+  /**
+   * Sets up the test.
+   */
   @Before
   public void setUp() {
     // Create a mock world for testing
@@ -39,12 +40,6 @@ public class NextTurnCommandTest {
     // Assuming that the turn logic in NextTurnCommand is correct,
     // you can execute the command and assert the output.
     nextTurnCommand.execute(mockWorld, scanner, out);
-
-    // Assert the output based on the expected behavior of NextTurnCommand
-    // and the current state of the mock world and players.
-    // For example, you can check if the turn number is correctly incremented,
-    // if the players' actions are correctly executed, and if the appropriate messages are generated.
-    // You might need to update the assertions based on your specific requirements.
 
     // Example assertions (update as needed):
     assertEquals("turn 1\n", out.toString()); // Check if the turn number is correctly incremented

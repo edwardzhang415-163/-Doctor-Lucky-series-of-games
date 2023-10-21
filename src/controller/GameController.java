@@ -2,6 +2,7 @@ package src.controller;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.InputMismatchException;
 import java.util.Map;
 import java.util.Scanner;
 import src.controller.command.AddPlayerCommand;
@@ -68,7 +69,7 @@ public class GameController implements Controller {
           Command command = commands.get(option);
           try {
             command.execute(world, scanner, out);
-          } catch (RuntimeException e) {
+          } catch (InputMismatchException e) {
             out.append("invalid writing try again");
           }
         } else {

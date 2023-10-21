@@ -9,8 +9,9 @@ import src.model.World;
  * Represents a command that can be executed on a game src.world.
  */
 public class NextTurnCommand implements Command {
-  private final int maxTurn;
+
   public int turn;
+  private final int maxTurn;
 
   /**
    * Creates a new command with the specified parameters.
