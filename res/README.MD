@@ -51,8 +51,25 @@ The game world is loaded from a text file with the following format:
 - 1
 - 4
 - 5
+- 7
+- player1
+- 1
+- false
+- 7
+- player1
+- 2
+- true
 - 6
-- 0
+- player1
+- 8
+- 1
+- 2
+- 3
+- 8
+- 1
+- 2
+- 1
+- q
 
 
 

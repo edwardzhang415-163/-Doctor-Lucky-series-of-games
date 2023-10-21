@@ -1,10 +1,11 @@
 package src;
 
+import java.io.InputStreamReader;
+import java.util.Scanner;
 import src.controller.GameController;
 import src.model.MyWorld;
 import src.model.World;
-import java.io.InputStreamReader;
-import java.util.Scanner;
+
 
 /**
  * Driver class for the game.
