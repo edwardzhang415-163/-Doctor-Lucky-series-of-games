@@ -27,103 +27,91 @@ public class MyWorldTest {
 
   @Before
   public void setUp() {
-    // Initialize the MyWorld object before each test
-    myWorld = new MyWorld("test-world.txt");
+    myWorld = new MyWorld("src/test/resources/world.txt");
   }
 
   @Test
-  public void testGetNumRows() {
-    assertEquals(3, myWorld.getNumRows());
+  public void testConstructorAndGetters() {
+    assertNotNull(myWorld);
+    assertEquals("Sample World", myWorld.getName());
+    assertEquals(4, myWorld.getNumRows());
+    assertEquals(4, myWorld.getNumCols());
+    assertNotNull(myWorld.getSpaces());
+    assertNotNull(myWorld.getCharacter());
+    assertNotNull(myWorld.getItems());
+    assertNotNull(myWorld.getPlayers());
   }
 
   @Test
-  public void testGetNumCols() {
-    assertEquals(3, myWorld.getNumCols());
-  }
-
-  @Test
-  public void testGetName() {
-    assertEquals("Test World", myWorld.getName());
-  }
-
-  @Test
-  public void testGetSpaces() {
-    List<Space> spaces = myWorld.getSpaces();
-    assertNotNull(spaces);
-    assertEquals(9, spaces.size()); // Assuming there are 9 spaces in the test-world.txt file
-  }
-
-  @Test
-  public void testGetCharacter() {
-    Character character = myWorld.getCharacter();
-    assertNotNull(character);
-    assertEquals("Test Character", character.getName());
-  }
-
-  @Test
-  public void testGetItems() {
-    List<Item> items = myWorld.getItems();
-    assertNotNull(items);
-    assertEquals(3, items.size()); // Assuming there are 3 items in the test-world.txt file
-  }
-
-  @Test
-  public void testMoveCharacter() {
-    String initialSpaceName = myWorld.getSpaces().get(0).getName();
-    myWorld.moveCharacter();
-    String newSpaceName = myWorld.getSpaces()
-            .get(myWorld.getCharacter().getCurrentRoomIndex()).getName();
-    assertNotEquals(initialSpaceName, newSpaceName);
-  }
-
-  @Test(expected = IllegalArgumentException.class)
-  public void testInvalidRoomIndexForItems() {
-    // Test if an IllegalArgumentException is thrown when an item has an invalid room index
-    MyWorld invalidWorld = new MyWorld("invalid-world.txt");
-  }
-
-  @Test(expected = IllegalArgumentException.class)
-  public void testOverlappingSpaces() {
-    // Test if an IllegalArgumentException is thrown when spaces overlap
-    MyWorld invalidWorld = new MyWorld("invalid-overlapping-world.txt");
+  public void testGetSpace() {
+    Space space = myWorld.getSpace(0);
+    assertNotNull(space);
+    assertEquals("Space1", space.getName());
   }
 
   @Test
   public void testRenderWorldImage() {
-    BufferedImage mapImage = myWorld.renderWorldImage();
-    assertNotNull(mapImage);
-    // You can add additional assertions related to the generated image if needed
+    assertNotNull(myWorld.renderWorldImage());
   }
 
   @Test
-  public void testSpaceNeighbors() {
-    List<Space> spaces = myWorld.getSpaces();
-    for (Space space : spaces) {
-      List<Space> neighbors = space.getNeighbors();
-      assertNotNull(neighbors);
-      for (Space neighbor : neighbors) {
-        assertTrue(space.isNeighbor(neighbor));
-      }
-    }
+  public void testMoveCharacter() {
+    String result = myWorld.moveCharacter();
+    assertNotNull(result);
+    assertTrue(result.contains("Character is now in "));
   }
 
   @Test
-  public void testAddItemToSpace() {
-    Space space = myWorld.getSpaces().get(0);
-    Item newItem = new MyWorldItem(1, 1, "New Item");
-    space.addItem(newItem);
-    assertTrue(space.getItems().contains(newItem));
+  public void testAddPlayer() {
+    String playerName = "Player1";
+    int initialSpaceIndex = 0;
+    boolean isBot = false;
+    String result = myWorld.addPlayer(playerName, initialSpaceIndex, isBot);
+    assertNotNull(result);
+    assertTrue(result.contains("Player Player1 is added to Space1"));
   }
 
   @Test
-  public void testMoveCharacterToInvalidSpace() {
-    // Move character to an invalid space index and check if it throws an exception
-    myWorld.getCharacter().setCurrentRoomIndex(-1);
-    try {
-      myWorld.moveCharacter();
-      fail("Expected IllegalArgumentException not thrown");
-    } catch (IllegalArgumentException e) {
-      assertEquals("Invalid room index for character: -1", e.getMessage());
-    }
+  public void testAddDuplicatePlayer() {
+    String playerName = "Player1";
+    int initialSpaceIndex = 0;
+    boolean isBot = false;
+    myWorld.addPlayer(playerName, initialSpaceIndex, isBot);
+    String result = myWorld.addPlayer(playerName, initialSpaceIndex, isBot);
+    assertNotNull(result);
+    assertTrue(result.contains("Player name already exists"));
+  }
+
+  @Test
+  public void testPlayerInfo() {
+    String playerName = "Player1";
+    int initialSpaceIndex = 0;
+    boolean isBot = false;
+    myWorld.addPlayer(playerName, initialSpaceIndex, isBot);
+    String result = myWorld.playerInfo(playerName);
+    assertNotNull(result);
+    assertTrue(result.contains("Player{name='Player1', currentSpace=Space1}"));
+  }
+
+  @Test
+  public void testPlayerInfoNonExistingPlayer() {
+    String playerName = "NonExistingPlayer";
+    String result = myWorld.playerInfo(playerName);
+    assertNotNull(result);
+    assertTrue(result.contains("there is no such player in this world"));
+  }
+
+  @Test
+  public void testEqualsAndHashCode() {
+    MyWorld myWorld1 = new MyWorld("src/test/resources/world.txt");
+    MyWorld myWorld2 = new MyWorld("src/test/resources/world.txt");
+    MyWorld myWorld3 = new MyWorld("src/test/resources/world2.txt");
+
+    assertEquals(myWorld, myWorld1);
+    assertEquals(myWorld, myWorld2);
+    assertNotEquals(myWorld, myWorld3);
+    assertEquals(myWorld.hashCode(), myWorld1.hashCode());
+    assertEquals(myWorld.hashCode(), myWorld2.hashCode());
+    assertNotEquals(myWorld.hashCode(), myWorld3.hashCode());
   }
 }

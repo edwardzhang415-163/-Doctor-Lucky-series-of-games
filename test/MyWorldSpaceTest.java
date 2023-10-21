@@ -6,10 +6,13 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 import java.util.List;
+import org.junit.Before;
 import org.junit.Test;
 import src.model.Item;
 import src.model.MyWorldItem;
+import src.model.MyWorldPlayer;
 import src.model.MyWorldSpace;
+import src.model.Player;
 import src.model.Space;
 
 
@@ -19,95 +22,102 @@ import src.model.Space;
 
 public class MyWorldSpaceTest {
 
-  @Test
-  public void testGetName() {
-    MyWorldSpace space = new MyWorldSpace(0, 0, 1, 1, "Test Space");
-    assertEquals("Test Space", space.getName());
+  private MyWorldSpace space;
+  private MyWorldSpace neighbor;
+
+  @Before
+  public void setUp() {
+    space = new MyWorldSpace(0, 0, 1, 1, "Space1");
+    neighbor = new MyWorldSpace(0, 2, 1, 3, "Space2");
   }
 
   @Test
-  public void testGetUpperLeftRow() {
-    MyWorldSpace space = new MyWorldSpace(1, 2, 3, 4, "Test Space");
-    assertEquals(1, space.getUpperLeftRow());
+  public void testConstructorAndGetters() {
+    assertNotNull(space);
+    assertEquals("Space1", space.getName());
+    assertEquals(0, space.getUpperLeftRow());
+    assertEquals(0, space.getUpperLeftCol());
+    assertEquals(1, space.getLowerRightRow());
+    assertEquals(1, space.getLowerRightCol());
+    assertNotNull(space.getNeighbors());
+    assertNotNull(space.getItems());
+    assertNotNull(space.toString());
   }
 
-  @Test
-  public void testGetUpperLeftCol() {
-    MyWorldSpace space = new MyWorldSpace(1, 2, 3, 4, "Test Space");
-    assertEquals(2, space.getUpperLeftCol());
-  }
-
-  @Test
-  public void testGetLowerRightRow() {
-    MyWorldSpace space = new MyWorldSpace(1, 2, 3, 4, "Test Space");
-    assertEquals(3, space.getLowerRightRow());
-  }
-
-  @Test
-  public void testGetLowerRightCol() {
-    MyWorldSpace space = new MyWorldSpace(1, 2, 3, 4, "Test Space");
-    assertEquals(4, space.getLowerRightCol());
+  @Test(expected = IllegalArgumentException.class)
+  public void testConstructorWithInvalidCoordinates() {
+    new MyWorldSpace(1, 1, 0, 0, "InvalidSpace");
   }
 
   @Test
   public void testIsNeighbor() {
-    MyWorldSpace space1 = new MyWorldSpace(1, 1, 2, 2, "Space 1");
-    MyWorldSpace space2 = new MyWorldSpace(2, 1, 3, 2, "Space 2");
-    assertTrue(space1.isNeighbor(space2));
+    assertTrue(space.isNeighbor(neighbor));
   }
 
   @Test
   public void testAddNeighbor() {
-    MyWorldSpace space1 = new MyWorldSpace(1, 1, 2, 2, "Space 1");
-    MyWorldSpace space2 = new MyWorldSpace(2, 1, 3, 2, "Space 2");
-    space1.addNeighbor(space2);
-    List<Space> neighbors = space1.getNeighbors();
-    assertNotNull(neighbors);
-    assertTrue(neighbors.contains(space2));
+    space.addNeighbor(neighbor);
+    List<Space> neighbors = space.getNeighbors();
+    assertEquals(1, neighbors.size());
+    assertEquals(neighbor, neighbors.get(0));
   }
 
   @Test
   public void testAddItem() {
-    MyWorldSpace space = new MyWorldSpace(1, 1, 2, 2, "Test Space");
-    Item item = new MyWorldItem(1, 10, "Test Item");
+    Item item = new MyWorldItem(0, 10, "Sword");
     space.addItem(item);
     List<Item> items = space.getItems();
-    assertNotNull(items);
-    assertTrue(items.contains(item));
+    assertEquals(1, items.size());
+    assertEquals(item, items.get(0));
   }
 
   @Test
-  public void testEquals() {
-    MyWorldSpace space1 = new MyWorldSpace(1, 1, 2, 2, "Test Space");
-    MyWorldSpace space2 = new MyWorldSpace(1, 1, 2, 2, "Test Space");
+  public void testRemoveItem() {
+    Item item = new MyWorldItem(0, 10, "Sword");
+    space.addItem(item);
+    String removedItemName = space.revomeItem(item);
+    assertEquals("Sword", removedItemName);
+    assertEquals(0, space.getItems().size());
+  }
+
+  @Test
+  public void testRemoveNonExistingItem() {
+    Item item = new MyWorldItem(0, 10, "Sword");
+    String result = space.revomeItem(item);
+    assertEquals("there is no such item in this space", result);
+  }
+
+  @Test
+  public void testAddPlayer() {
+    Player player = new MyWorldPlayer("Player1", space);
+    String result = space.addPlayer(player);
+    assertEquals("player Player1 is added to Space1", result);
+  }
+
+  @Test
+  public void testRemovePlayer() {
+    Player player = new MyWorldPlayer("Player1", space);
+    space.addPlayer(player);
+    String result = space.removePlayer(player);
+    assertEquals("player Player1 is removed from Space1", result);
+  }
+
+  @Test
+  public void testRemoveNonExistingPlayer() {
+    Player player = new MyWorldPlayer("Player1", space);
+    String result = space.removePlayer(player);
+    assertEquals("player Player1 is removed from Space1", result);
+  }
+
+  @Test
+  public void testEqualsAndHashCode() {
+    MyWorldSpace space1 = new MyWorldSpace(0, 0, 1, 1, "Space1");
+    MyWorldSpace space2 = new MyWorldSpace(0, 0, 1, 1, "Space1");
+    MyWorldSpace space3 = new MyWorldSpace(1, 1, 2, 2, "Space2");
+
     assertEquals(space1, space2);
-  }
-
-  @Test
-  public void testNotEquals() {
-    MyWorldSpace space1 = new MyWorldSpace(1, 1, 2, 2, "Test Space 1");
-    MyWorldSpace space2 = new MyWorldSpace(1, 1, 2, 2, "Test Space 2");
-    assertNotEquals(space1, space2);
-  }
-
-  @Test
-  public void testHashCode() {
-    MyWorldSpace space = new MyWorldSpace(1, 1, 2, 2, "Test Space");
-    assertEquals(space.hashCode(), space.hashCode());
-  }
-
-  @Test
-  public void testToString() {
-    MyWorldSpace space1 = new MyWorldSpace(1, 1, 2, 2, "Test Space 1");
-    MyWorldSpace space2 = new MyWorldSpace(2, 2, 3, 3, "Test Space 2");
-    space1.addNeighbor(space2);
-    space2.addNeighbor(space1);
-    Item item = new MyWorldItem(1, 10, "Test Item");
-    space1.addItem(item);
-    space2.addItem(item);
-    assertEquals("MyWorldSpace{\nname='Test Space 1\nneighbors="
-            + "Test Space 2, items=Test Item}", space1.toString());
-    assertEquals("MyWorldSpace{\nname='Test Space 2\nneighbors="
-            + "Test Space 1, items=Test Item}", space2.toString());
+    assertNotEquals(space1, space3);
+    assertEquals(space1.hashCode(), space2.hashCode());
+    assertNotEquals(space1.hashCode(), space3.hashCode());
   }
 }

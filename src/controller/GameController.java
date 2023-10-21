@@ -1,5 +1,9 @@
 package src.controller;
 
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Scanner;
 import src.controller.command.AddPlayerCommand;
 import src.controller.command.Command;
 import src.controller.command.MoveCharacterCommand;
@@ -10,11 +14,10 @@ import src.controller.command.SpaceInfoCommand;
 import src.controller.command.TargetInfoCommand;
 import src.controller.command.WorldInfoCommand;
 import src.model.World;
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Scanner;
 
+/**
+ * Represents a controller that can be used to play a game.
+ */
 public class GameController implements Controller {
 
   private final Readable in;
@@ -22,6 +25,13 @@ public class GameController implements Controller {
   private final int maxTurn;
   private final Map<String, Command> commands;
 
+  /**
+   * Constructs a game controller.
+   *
+   * @param inN        the input source
+   * @param outN       the output source
+   * @param maxTurnsN  the maximum number of turns
+   */
   public GameController(Readable inN, Appendable outN, int maxTurnsN) {
     this.in = inN;
     this.out = outN;
@@ -41,7 +51,7 @@ public class GameController implements Controller {
   @Override
   public void start(World world) {
     try (Scanner scanner = new Scanner(this.in)) {
-      while (true){
+      while (true) {
         out.append(String.format("Select option:\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n",
             "1.Output the world to an image file.",
             "2.Move character.",
@@ -56,16 +66,16 @@ public class GameController implements Controller {
         // Execute the corresponding command.
         if (commands.containsKey(option)) {
           Command command = commands.get(option);
-          try{
-          command.execute(world, scanner, out);
-          }catch (RuntimeException e) {
+          try {
+            command.execute(world, scanner, out);
+          } catch (RuntimeException e) {
             out.append("invalid writing try again");
           }
         } else {
           out.append("Invalid option, please try again\n");
         }
-        }
-      }catch (IOException e) {
+      }
+    } catch (IOException e) {
       throw new IllegalStateException("An error occured writing the result");
     }
   }

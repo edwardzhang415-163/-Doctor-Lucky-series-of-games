@@ -28,6 +28,7 @@ public class MyWorldSpace  implements Space {
    * @param lowerRightColN The column coordinate of the lower right corner.
    * @param nameN          The name of the space.
    */
+
   public MyWorldSpace(int upperLeftRowN, int upperLeftColN,
                       int lowerRightRowN, int lowerRightColN, String nameN) {
     if (upperLeftRowN > lowerRightRowN || upperLeftColN > lowerRightColN) {
@@ -133,6 +134,7 @@ public class MyWorldSpace  implements Space {
     players.add(player);
     return String.format("player %s is added to %s", player.getName(), this.getName());
   }
+
   @Override
   public String removePlayer(Player player) {
     for (Player p : players) {
@@ -143,6 +145,7 @@ public class MyWorldSpace  implements Space {
     }
     return String.format("player %s is removed from %s", player.getName(), this.getName());
   }
+
   @Override
   public boolean equals(Object o) {
     if (this == o) {

@@ -1,6 +1,4 @@
-package src.model;
-
-
+package test;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -16,11 +14,22 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 import javax.imageio.ImageIO;
+import src.model.BotPlayer;
+import src.model.Character;
+import src.model.Item;
+import src.model.MyWorldCharacter;
+import src.model.MyWorldItem;
+import src.model.MyWorldPlayer;
+import src.model.MyWorldSpace;
+import src.model.Player;
+import src.model.Space;
+import src.model.World;
+
 
 /**
- * Represents the game src.world where spaces, items, and characters are placed.
+ * tset the game src.world where spaces, items, and characters are placed.
  */
-public class MyWorld implements World {
+public class MockWorld implements World {
   private int numRows;
   private int numCols;
   private String name;
@@ -38,7 +47,7 @@ public class MyWorld implements World {
    * @param filename The name of the file to parse.
    */
 
-  public MyWorld(String filename) {
+  public MockWorld(String filename) {
     BufferedReader br;
     try {
       br = new BufferedReader(new FileReader(filename));
@@ -72,13 +81,13 @@ public class MyWorld implements World {
         } else if (lineNumber <= spaceNumber + 2) {
           String[] tokens = line.trim().split("\\s+", 5);
           spacesN.add(new MyWorldSpace(Integer.parseInt(tokens[0]), Integer.parseInt(tokens[1]),
-                  Integer.parseInt(tokens[2]) + 1, Integer.parseInt(tokens[3]) + 1, tokens[4]));
+              Integer.parseInt(tokens[2]) + 1, Integer.parseInt(tokens[3]) + 1, tokens[4]));
         } else if (lineNumber == spaceNumber + 3) {
           numItems = Integer.parseInt(line);
         }  else if (lineNumber <= spaceNumber + 3 + numItems) {
           String[] tokens = line.split(" ", 3);
           itemsN.add(new MyWorldItem(Integer.parseInt(tokens[0]),
-                  Integer.parseInt(tokens[1]), tokens[2]));
+              Integer.parseInt(tokens[1]), tokens[2]));
         }
         lineNumber++;
       }
@@ -196,7 +205,7 @@ public class MyWorld implements World {
   public String moveCharacter() {
     character.moveSpace();
     return String.format("Character is now in %s",
-            spaces.get(character.getCurrentRoomIndex()).getName());
+        spaces.get(character.getCurrentRoomIndex()).getName());
   }
 
   @Override
@@ -267,14 +276,14 @@ public class MyWorld implements World {
     for (int i = 0; i < spacesN.size(); i++) {
       Space spaceA = spacesN.get(i);
       if (spaceA.getLowerRightRow() - 1 > numRows || spaceA.getLowerRightCol() - 1 > numCols
-              || spaceA.getUpperLeftRow() < 0 || spaceA.getUpperLeftCol() < 0) {
+          || spaceA.getUpperLeftRow() < 0 || spaceA.getUpperLeftCol() < 0) {
         throw new IllegalArgumentException("Spaces overflow: " + spaceA.getName());
       }
       for (int j = i + 1; j < spacesN.size(); j++) {
         Space spaceB = spacesN.get(j);
         if (isOverlap(spaceA, spaceB)) {
           throw new IllegalArgumentException("Spaces overlap: " + spaceA.getName()
-                  + " and " + spaceB.getName());
+              + " and " + spaceB.getName());
         }
       }
     }
@@ -299,13 +308,13 @@ public class MyWorld implements World {
     int lowerRightColB = spaceB.getLowerRightCol();
 
     return (upperLeftRowA > upperLeftRowB && upperLeftRowA < lowerRightRowB
-            && upperLeftColA > upperLeftColB && upperLeftColA < lowerRightColB)
-            || (lowerRightRowA > upperLeftRowB && lowerRightRowA < lowerRightRowB
-            && lowerRightColA > upperLeftColB && lowerRightColA < lowerRightColB)
-            || (upperLeftRowA > upperLeftRowB && upperLeftRowA < lowerRightRowB
-            && lowerRightColA > upperLeftColB && lowerRightColA < lowerRightColB)
-            || (lowerRightRowA > upperLeftRowB && lowerRightRowA < lowerRightRowB
-            && upperLeftColA > upperLeftColB && upperLeftColA < lowerRightColB);
+        && upperLeftColA > upperLeftColB && upperLeftColA < lowerRightColB)
+        || (lowerRightRowA > upperLeftRowB && lowerRightRowA < lowerRightRowB
+        && lowerRightColA > upperLeftColB && lowerRightColA < lowerRightColB)
+        || (upperLeftRowA > upperLeftRowB && upperLeftRowA < lowerRightRowB
+        && lowerRightColA > upperLeftColB && lowerRightColA < lowerRightColB)
+        || (lowerRightRowA > upperLeftRowB && lowerRightRowA < lowerRightRowB
+        && upperLeftColA > upperLeftColB && upperLeftColA < lowerRightColB);
   }
 
   /**
@@ -319,22 +328,6 @@ public class MyWorld implements World {
         }
       }
     }
-  }
-
-  @Override
-  public boolean equals(Object o) {
-    if (this == o) {
-      return true;
-    }
-    if (o == null || getClass() != o.getClass()) {
-      return false;
-    }
-    MyWorld myWorld = (MyWorld) o;
-    return numRows == myWorld.numRows
-            && numCols == myWorld.numCols
-            && Objects.equals(spaces, myWorld.spaces)
-            && Objects.equals(character, myWorld.character)
-            && Objects.equals(items, myWorld.items);
   }
 
   @Override
@@ -353,11 +346,10 @@ public class MyWorld implements World {
         .collect(Collectors.joining(",\n"));
 
     String playersList = players.stream()
-            .map(Player::getName)
-            .collect(Collectors.joining(",\n"));
+        .map(Player::getName)
+        .collect(Collectors.joining(",\n"));
 
     return String.format("%s{\nspaces=\n%s\ntarget=%s\nitems=\n%s\nplayers=\n%s\n}",
         name, spacesList, character.getName(), itemsList, playersList);
   }
 }
-

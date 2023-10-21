@@ -2,6 +2,9 @@ package src.model;
 
 import java.util.List;
 
+/**
+ * Represents a player in the game.
+ */
 public interface Player {
   public String getName();
 

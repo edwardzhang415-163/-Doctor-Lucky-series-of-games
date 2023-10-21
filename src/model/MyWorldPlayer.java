@@ -4,13 +4,21 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * Represents a player in the game.
+ */
 public class MyWorldPlayer implements Player {
   private final String name;
   private final List<Item> items;
   private Space currentSpace;
   private final int maxItem;
 
-
+  /**
+   * Creates a new player with the specified name and current space.
+   *
+   * @param nameN         The name of the player.
+   * @param currentSpaceN The current space of the player.
+   */
   public MyWorldPlayer(String nameN, Space currentSpaceN) {
     this.name = nameN;
     this.currentSpace = currentSpaceN;
@@ -64,10 +72,12 @@ public class MyWorldPlayer implements Player {
     return String.format("Player %s is in %s. You can go to: %s",
             name, currentSpace.getName(), nighbours);
   }
+
   @Override
   public List<Item> getItems() {
     return items;
   }
+
   @Override
   public String doAction() {
     return "";

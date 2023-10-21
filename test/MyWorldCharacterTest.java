@@ -1,6 +1,8 @@
 package test;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.assertNotNull;
 
 import org.junit.Test;
 import src.model.MyWorldCharacter;
@@ -14,80 +16,74 @@ import src.model.MyWorldCharacter;
 
 public class MyWorldCharacterTest {
 
+
   @Test
-  public void testGetMaxIndex() {
-    MyWorldCharacter character = new MyWorldCharacter(100, "Test Character", 0, 10);
+  public void testConstructorAndGetters() {
+    MyWorldCharacter character = new MyWorldCharacter(100, "Player", 0, 10);
+    assertNotNull(character);
+    assertEquals(100, character.getHealth());
+    assertEquals("Player", character.getName());
+    assertEquals(0, character.getCurrentRoomIndex());
     assertEquals(10, character.getMaxIndex());
+  }
+
+  @Test(expected = IllegalArgumentException.class)
+  public void testConstructorWithInvalidMaxIndex() {
+    new MyWorldCharacter(100, "Player", 0, -1);
   }
 
   @Test
   public void testSetMaxIndex() {
-    MyWorldCharacter character = new MyWorldCharacter(100, "Test Character", 0, 10);
+    MyWorldCharacter character = new MyWorldCharacter(100, "Player", 0, 10);
     character.setMaxIndex(15);
     assertEquals(15, character.getMaxIndex());
   }
 
   @Test(expected = IllegalArgumentException.class)
   public void testSetMaxIndexWithInvalidValue() {
-    MyWorldCharacter character = new MyWorldCharacter(100, "Test Character", 0, 10);
-    character.setMaxIndex(-5); // Should throw an exception
+    MyWorldCharacter character = new MyWorldCharacter(100, "Player", 0, 10);
+    character.setMaxIndex(-1);
   }
 
   @Test
-  public void testGetHealth() {
-    MyWorldCharacter character = new MyWorldCharacter(100, "Test Character", 0, 10);
-    assertEquals(100, character.getHealth());
-  }
-
-  @Test
-  public void testGetName() {
-    MyWorldCharacter character = new MyWorldCharacter(100, "Test Character", 0, 10);
-    assertEquals("Test Character", character.getName());
-  }
-
-  @Test
-  public void testGetCurrentRoomIndex() {
-    MyWorldCharacter character = new MyWorldCharacter(100, "Test Character", 5, 10);
-    assertEquals(5, character.getCurrentRoomIndex());
-  }
-
-  @Test
-  public void testSetCurrentRoomIndex() {
-    MyWorldCharacter character = new MyWorldCharacter(100, "Test Character", 0, 10);
-    character.setCurrentRoomIndex(7);
-    assertEquals(7, character.getCurrentRoomIndex());
-  }
-
-  @Test(expected = IllegalArgumentException.class)
-  public void testSetCurrentRoomIndexWithInvalidValue() {
-    MyWorldCharacter character = new MyWorldCharacter(100, "Test Character", 0, 10);
-    character.setCurrentRoomIndex(15); // Should throw an exception
-  }
-
-  @Test
-  public void testMoveSpace() {
-    MyWorldCharacter character = new MyWorldCharacter(100, "Test Character", 0, 10);
-    character.moveSpace();
+  public void testMoveSpaceWithinMaxIndex() {
+    MyWorldCharacter character = new MyWorldCharacter(100, "Player", 0, 10);
+    int newRoomIndex = character.moveSpace();
+    assertEquals(1, newRoomIndex);
     assertEquals(1, character.getCurrentRoomIndex());
   }
 
   @Test
-  public void testMoveSpaceWithWrapAround() {
-    MyWorldCharacter character = new MyWorldCharacter(100, "Test Character", 10, 10);
-    character.moveSpace();
+  public void testMoveSpaceWithMaxIndexBoundary() {
+    MyWorldCharacter character = new MyWorldCharacter(100, "Player", 10, 10);
+    int newRoomIndex = character.moveSpace();
+    assertEquals(0, newRoomIndex);
     assertEquals(0, character.getCurrentRoomIndex());
   }
 
   @Test
-  public void testEquals() {
-    MyWorldCharacter character1 = new MyWorldCharacter(100, "Test Character", 5, 10);
-    MyWorldCharacter character2 = new MyWorldCharacter(100, "Test Character", 5, 10);
-    assertEquals(character1, character2);
+  public void testMoveSpaceWithInvalidMaxIndex() {
+    MyWorldCharacter character = new MyWorldCharacter(100, "Player", 10, 5);
+    int newRoomIndex = character.moveSpace();
+    assertEquals(0, newRoomIndex);
+    assertEquals(0, character.getCurrentRoomIndex());
   }
 
   @Test
-  public void testHashCode() {
-    MyWorldCharacter character = new MyWorldCharacter(100, "Test Character", 5, 10);
-    assertEquals(character.hashCode(), character.hashCode());
+  public void testEqualsAndHashCode() {
+    MyWorldCharacter character1 = new MyWorldCharacter(100, "Player", 0, 10);
+    MyWorldCharacter character2 = new MyWorldCharacter(100, "Player", 0, 10);
+    MyWorldCharacter character3 = new MyWorldCharacter(50, "Enemy", 0, 10);
+
+    assertEquals(character1, character2);
+    assertNotEquals(character1, character3);
+    assertEquals(character1.hashCode(), character2.hashCode());
+    assertNotEquals(character1.hashCode(), character3.hashCode());
+  }
+
+  @Test
+  public void testToString() {
+    MyWorldCharacter character = new MyWorldCharacter(100, "Player", 0, 10);
+    assertEquals("Target{health=100, name='Player', currentRoomIndex=0}", character.toString());
   }
 }

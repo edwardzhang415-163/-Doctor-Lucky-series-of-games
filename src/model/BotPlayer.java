@@ -3,7 +3,18 @@ package src.model;
 import java.util.Random;
 import java.util.stream.Collectors;
 
+/**
+ * A bot player in the game.
+ */
+
 public class BotPlayer extends MyWorldPlayer {
+
+  /**
+   * Constructor for a bot player.
+   *
+   * @param nameN the name of the bot player.
+   * @param currentSpaceN the current space of the bot player.
+   */
 
   public BotPlayer(String nameN, Space currentSpaceN) {
     super(nameN, currentSpaceN);
@@ -23,6 +34,7 @@ public class BotPlayer extends MyWorldPlayer {
       default: return "doNothing";
     }
   }
+
   @Override
   public String toString() {
     String itemsList = getItems().stream()
