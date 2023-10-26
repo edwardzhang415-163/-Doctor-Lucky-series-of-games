@@ -11,6 +11,7 @@ public class PlayerInfoCommand implements Command {
   @Override
   public void execute(World world, Scanner scanner, Appendable out) throws IOException {
     out.append("please provide player name\n");
+    scanner.nextLine();
     String playerName = scanner.nextLine();
     out.append(world.playerInfo(playerName)).append("\n");
   }

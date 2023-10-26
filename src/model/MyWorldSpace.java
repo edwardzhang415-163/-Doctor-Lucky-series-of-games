@@ -184,7 +184,7 @@ public class MyWorldSpace  implements Space {
             .map(Player::getName)
             .collect(Collectors.joining(", "));
 
-    return String.format("MyWorldSpace{\nname='%s'\nneighbors=%s\nitems=%s\n players=%s\n}",
+    return String.format("Space{\nname='%s'\nneighbors=%s\nitems=%s\nplayers=%s\n}",
         name, neighborsList, itemsList, playersList);
   }
 }

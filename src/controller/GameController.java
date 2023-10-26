@@ -55,7 +55,7 @@ public class GameController implements Controller {
       while (true) {
         out.append(String.format("Select option:\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n",
             "1.Output the world to an image file.",
-            "2.Move character.",
+            "2.Move target.",
             "3.Space info by index.",
             "4.Target info.",
             "5.World info.",

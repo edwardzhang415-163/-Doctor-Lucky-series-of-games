@@ -11,6 +11,7 @@ public class AddPlayerCommand implements Command {
   @Override
   public void execute(World world, Scanner scanner, Appendable out) throws IOException {
     out.append("please provide player name\n");
+    scanner.nextLine();
     String playerNameN = scanner.nextLine();
     out.append("please provide initial space index\n");
     int initialSpaceIndex = scanner.nextInt();

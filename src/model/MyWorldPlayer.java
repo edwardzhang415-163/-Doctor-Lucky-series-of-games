@@ -67,10 +67,10 @@ public class MyWorldPlayer implements Player {
 
   @Override
   public String lookAround() {
-    String nighbours = currentSpace.getNeighbors().stream().map(Space::getName)
+    String nighbours = currentSpace.getNeighbors().stream().map(Space::toString)
             .collect(Collectors.joining(", "));
-    return String.format("Player %s is in %s. You can go to: %s",
-            name, currentSpace.getName(), nighbours);
+    return String.format("Player %s is in %s. Player %s can go to: %s",
+            name, currentSpace.getName(), name, nighbours);
   }
 
   @Override

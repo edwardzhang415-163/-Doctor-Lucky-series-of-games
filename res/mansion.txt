@@ -1,4 +1,4 @@
-D:\CodeStation\CS 5010\Doctor-Lucky-series-of-games\-Doctor-Lucky-series-of-games\res\mansion.txt36 30 Edwardzahng's Mansion
+36 30 Edwardzahng's Mansion
 50 Doctor Zhang
 21
 22 19 22 24 Armory

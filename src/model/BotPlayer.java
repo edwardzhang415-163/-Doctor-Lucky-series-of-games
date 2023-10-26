@@ -24,14 +24,18 @@ public class BotPlayer extends MyWorldPlayer {
   public String doAction() {
     Random random = new Random();
     int action = random.nextInt(3);
-    switch (action) {
-      case 0:
-        return pickupItems(getCurrentSpace().getItems().get(0).getName());
-      case 1:
-        return moveTo(getCurrentSpace().getNeighbors().get(0).getName());
-      case 2:
-        return lookAround();
-      default: return "doNothing";
+    try {
+      switch (action) {
+        case 0:
+          return pickupItems(getCurrentSpace().getItems().get(0).getName());
+        case 1:
+          return moveTo(getCurrentSpace().getNeighbors().get(0).getName());
+        case 2:
+          return lookAround();
+        default: return "doNothing";
+      }
+    } catch (IndexOutOfBoundsException e) {
+      return lookAround();
     }
   }
 
