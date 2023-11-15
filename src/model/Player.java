@@ -18,7 +18,12 @@ public interface Player {
 
   public List<Item> getItems();
 
+  public String attackTarget();
+
+  String movePet(String spaceName);
+
   public String doAction();
+
 
 
 

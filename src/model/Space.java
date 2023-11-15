@@ -79,9 +79,23 @@ public interface Space {
    */
   void addItem(Item item);
 
-  public String revomeItem(Item item);
+  String revomeItem(Item item);
 
-  public String removePlayer(Player player);
+  String removePlayer(Player player);
   
-  public String addPlayer(Player player);
+  String addPlayer(Player player);
+
+  List<Player> getPlayers();
+
+  String scope();
+
+  void addCharacter(Character character);
+
+  void removeCharacter();
+
+  void addPet(Pet pet);
+
+  void removePet();
+
+  String getCharacter();
 }

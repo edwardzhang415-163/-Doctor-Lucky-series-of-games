@@ -26,10 +26,8 @@ public class MyWorld implements World {
   private String name;
   private List<Space> spaces; // Stores all the space information
   private Character character; // Stores character information
+  private MyWorldPet pet;
   private List<Item> items;
-
-
-
   private List<Player> players;
 
   /**
@@ -53,6 +51,7 @@ public class MyWorld implements World {
     int spaceNumber = 0;
     int health = 0;
     String characterName = "";
+    String petName = "";
     int numItems = 0;
     List<Space> spacesN = new ArrayList<>();
     List<Item> itemsN = new ArrayList<>();
@@ -67,15 +66,18 @@ public class MyWorld implements World {
           String[] tokens = line.trim().split("\\s+", 2);
           health = Integer.parseInt(tokens[0]);
           characterName = tokens[1];
-        } else if (lineNumber == 2) {
+        } else if (lineNumber == 2){
+          petName = line;
+        }
+        else if (lineNumber == 3) {
           spaceNumber = Integer.parseInt(line);
-        } else if (lineNumber <= spaceNumber + 2) {
+        } else if (lineNumber <= spaceNumber + 3) {
           String[] tokens = line.trim().split("\\s+", 5);
           spacesN.add(new MyWorldSpace(Integer.parseInt(tokens[0]), Integer.parseInt(tokens[1]),
                   Integer.parseInt(tokens[2]) + 1, Integer.parseInt(tokens[3]) + 1, tokens[4]));
-        } else if (lineNumber == spaceNumber + 3) {
+        } else if (lineNumber == spaceNumber + 4) {
           numItems = Integer.parseInt(line);
-        }  else if (lineNumber <= spaceNumber + 3 + numItems) {
+        }  else if (lineNumber <= spaceNumber + 4 + numItems) {
           String[] tokens = line.split(" ", 3);
           itemsN.add(new MyWorldItem(Integer.parseInt(tokens[0]),
                   Integer.parseInt(tokens[1]), tokens[2]));
@@ -87,8 +89,8 @@ public class MyWorld implements World {
       this.name = worldName;
       this.spaces = spacesN;
       this.character = new MyWorldCharacter(health, characterName, 0, spaceNumber - 1);
+      this.pet = new MyWorldPet(petName);
       this.items = itemsN;
-      this.spaces = spacesN;
     } catch (IOException e) {
       System.out.println(lineNumber);
       e.printStackTrace();
@@ -200,6 +202,22 @@ public class MyWorld implements World {
   }
 
   @Override
+  public String movePet(String spaceName) {
+    for (Space space : spaces) {
+      if (space.getName().equals(spaceName)) {
+        pet.setCurrentRoomIndex(spaces.indexOf(space));
+        return String.format("Pet is now in %s", spaceName);
+      }
+    }
+    return "There is no such space in this world";
+  }
+
+  @Override
+  public String wanderingPet() {
+    return pet.toString();
+  }
+
+  @Override
   public Space getSpace(int spaceIndex) {
     return spaces.get(spaceIndex);
   }
@@ -210,9 +228,9 @@ public class MyWorld implements World {
       Player player;
       Space initialSpace = spaces.get(initialSpaceIndex);
       if (isBot) {
-        player = new BotPlayer(playerName, initialSpace);
+        player = new BotPlayer(playerName, initialSpace, this);
       } else {
-        player = new MyWorldPlayer(playerName, initialSpace);
+        player = new MyWorldPlayer(playerName, initialSpace, this);
       }
       for (Player p : players) {
         if (p.getName().equals(playerName)) {

@@ -39,11 +39,16 @@ public class NextTurnCommand implements Command {
       out.append("turn ").append(String.valueOf(turn)).append("\n");
       for (Player player : world.getPlayers()) {
         out.append(String.format("Player %s turn", player.getName())).append("\n");
+        out.append(String.format("Player %s have items: ", player.getName(),
+            player.getItems().stream().map(Item::getName)
+            .collect(Collectors.joining(",")))).append("\n");
         if ('p' == player.toString().charAt(0)) {
-          out.append(String.format("Select option:\n%s\n%s\n%s\n",
+          out.append(String.format("Select option:\n%s\n%s\n%s\nn%s\n%s\n",
               "1.look around.",
               "2.move to neighbor space.",
-              "3.pick up items."));
+              "3.pick up items.",
+              "4.teleport pet.",
+              "5.attack target."));
           String option = scanner.next();
           switch (option) {
             case "1":
@@ -65,6 +70,19 @@ public class NextTurnCommand implements Command {
               String item = scanner.nextLine();
               out.append(player.pickupItems(item)).append("\n");
               break;
+            case "4":
+              out.append("please provide space name\n");
+              scanner.nextLine();
+              String teleportSpace = scanner.nextLine();
+              out.append(player.movePet(teleportSpace)).append("\n");
+              break;
+            case "5":
+              out.append(player.attackTarget()).append("\n");
+              if (world.getCharacter().getHealth() <= 0) {
+                out.append(player.getName()).append(" win! game over\n");
+                turn = maxTurn + 1;
+              }
+              break;
             default:
               out.append("Invalid option, please try again\n");
               break;
@@ -75,9 +93,10 @@ public class NextTurnCommand implements Command {
         }
       }
       out.append(world.moveCharacter()).append("\n");
+      out.append(world.wanderingPet()).append("\n");
       out.append("this turn is end\n");
       if (turn == maxTurn) {
-        out.append("Max turn! game over\n");
+        out.append("Target escaped! game over\n");
       }
     } else {
       out.append("game is over\n");

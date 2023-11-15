@@ -96,6 +96,12 @@ public class MyWorldCharacter implements Character {
   }
 
   @Override
+  public int hurt( int damage) {
+      health = health - damage;
+    return health;
+  }
+
+  @Override
   public boolean equals(Object o) {
     if (this == o) {
       return true;

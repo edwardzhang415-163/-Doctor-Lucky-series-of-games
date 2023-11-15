@@ -12,6 +12,7 @@ public class MyWorldPlayer implements Player {
   private final List<Item> items;
   private Space currentSpace;
   private final int maxItem;
+  private final World world;
 
   /**
    * Creates a new player with the specified name and current space.
@@ -19,11 +20,12 @@ public class MyWorldPlayer implements Player {
    * @param nameN         The name of the player.
    * @param currentSpaceN The current space of the player.
    */
-  public MyWorldPlayer(String nameN, Space currentSpaceN) {
+  public MyWorldPlayer(String nameN, Space currentSpaceN, World myWorld) {
     this.name = nameN;
     this.currentSpace = currentSpaceN;
     this.maxItem = 5;
     this.items = new ArrayList<>();
+    this.world = myWorld;
   }
 
   @Override
@@ -67,15 +69,53 @@ public class MyWorldPlayer implements Player {
 
   @Override
   public String lookAround() {
-    String nighbours = currentSpace.getNeighbors().stream().map(Space::toString)
+    String items = currentSpace.getItems().stream().map(Item::getName)
+        .collect(Collectors.joining(", "));
+    String players = currentSpace.getPlayers().stream().map(Player::getName)
+        .collect(Collectors.joining(", "));
+    String nighbours = currentSpace.getNeighbors().stream().map(Space::scope)
             .collect(Collectors.joining(", "));
-    return String.format("Player %s is in %s. Player %s can go to: %s",
-            name, currentSpace.getName(), name, nighbours);
+    return String.format("Player %s is in %s.\n space have items: %s.\n space have playlers: %s.\n " +
+            "Player %s can go to: %s",
+            name, currentSpace.getName(), items, players, name, nighbours);
   }
 
   @Override
   public List<Item> getItems() {
     return items;
+  }
+
+  @Override
+  public String attackTarget(){
+    int damage = 1;
+    Item weapon = null;
+    StringBuilder result = new StringBuilder();
+    List<Player> nighbourPlayers = currentSpace.getNeighbors().stream()
+        .flatMap(space -> space.getPlayers().stream())
+        .collect(Collectors.toList());
+    if ("".equals(currentSpace.getCharacter())){
+      return "There is no target";
+    }
+    for (Item item : items) {
+      if (item.getDamage() >= damage) {
+        damage = item.getDamage();
+        weapon = item;
+      }
+    }
+    result.append(String.format("Player %s attacked %s ", name, currentSpace.getCharacter()));
+    if (weapon != null){
+      result.append(String.format("with %s ", weapon.getName()));
+      removeItem(weapon);
+    }
+    if(nighbourPlayers.size()!=0){
+      return result.append("but failed.").toString();
+    }
+    return result.append(String.format("and damaged %s ", weapon.getDamage())).toString();
+  }
+
+  private String removeItem(Item item) {
+    items.remove(item);
+    return String.format("Player %s removed %s", name, item.getName());
   }
 
   @Override
@@ -90,6 +130,11 @@ public class MyWorldPlayer implements Player {
         .collect(Collectors.joining(", "));
     return String.format("player{\nname='%s'\nitems=%s\ncurrentSpace=%s\n}",
         name, itemsList, currentSpace.getName());
+  }
+
+  @Override
+  public String movePet(String spaceName) {
+    return world.movePet(spaceName);
   }
 }
 

@@ -1,16 +1,6 @@
 package src.model;
 
-/**
- * This interface represents a character in the game.
- */
-public interface Character {
-
-  /**
-   * Gets the health of the character.
-   *
-   * @return The health of the character.
-   */
-  int getHealth();
+public interface Pet {
 
   /**
    * Gets the name of the character.
@@ -33,12 +23,5 @@ public interface Character {
    */
   void setCurrentRoomIndex(int roomIndex);
 
-  public int getMaxIndex();
 
-  public void setMaxIndex(int maxIndex);
-
-  public int moveSpace();
-
-  public int hurt( int damage);
 }
-

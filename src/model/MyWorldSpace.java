@@ -19,6 +19,8 @@ public class MyWorldSpace  implements Space {
   private  List<Space> neighbors;
   private  List<Item> items;
   private  List<Player> players;
+  private String character ;
+  private String pet;
   /**
    * Creates a new space with the specified coordinates, name, neighbors, and items.
    *
@@ -42,6 +44,8 @@ public class MyWorldSpace  implements Space {
     this.neighbors = new ArrayList<>();
     this.items = new ArrayList<>();
     this.players = new ArrayList<>();
+    this.character = "";
+    this.pet = "";
   }
 
   @Override
@@ -77,6 +81,11 @@ public class MyWorldSpace  implements Space {
   @Override
   public List<Item> getItems() {
     return items;
+  }
+
+  @Override
+  public List<Player> getPlayers() {
+    return players;
   }
 
   @Override
@@ -119,6 +128,11 @@ public class MyWorldSpace  implements Space {
   }
 
   @Override
+  public String getCharacter() {
+    return character;
+  }
+
+  @Override
   public String revomeItem(Item item) {
     for (Item i : items) {
       if (i.getName().equals(item.getName())) {
@@ -147,6 +161,26 @@ public class MyWorldSpace  implements Space {
   }
 
   @Override
+  public void addCharacter(Character character) {
+    this.character = character.getName();
+  }
+
+  @Override
+  public void addPet(Pet pet) {
+    this.pet = pet.getName();
+  }
+
+  @Override
+  public void removeCharacter() {
+    this.character = "";
+  }
+
+  @Override
+  public void removePet() {
+    this.pet = "";
+  }
+
+  @Override
   public boolean equals(Object o) {
     if (this == o) {
       return true;
@@ -165,6 +199,23 @@ public class MyWorldSpace  implements Space {
   }
 
   @Override
+  public String scope() {
+    if ("".equals(pet)){
+      return String.format("Space{\nname='%s', other invisible}",
+          name);
+    }
+    String itemsList = items.stream()
+        .map(Item::getName)
+        .collect(Collectors.joining(", "));
+
+    String playersList = players.stream()
+        .map(Player::getName)
+        .collect(Collectors.joining(", "));
+    return String.format("Space{\nname='%s'\nitems=%s\nplayers=%s\nTarget=%s\n}",
+        name, itemsList, playersList, character);
+  }
+
+  @Override
   public int hashCode() {
     return Objects.hash(upperLeftRow, upperLeftCol, lowerRightRow,
             lowerRightCol, name, neighbors, items);
@@ -172,6 +223,7 @@ public class MyWorldSpace  implements Space {
 
   @Override
   public String toString() {
+
     String neighborsList = neighbors.stream()
         .map(Space::getName)
         .collect(Collectors.joining(", "));
@@ -184,8 +236,8 @@ public class MyWorldSpace  implements Space {
             .map(Player::getName)
             .collect(Collectors.joining(", "));
 
-    return String.format("Space{\nname='%s'\nneighbors=%s\nitems=%s\nplayers=%s\n}",
-        name, neighborsList, itemsList, playersList);
+    return String.format("Space{\nname='%s'\nneighbors=%s\nitems=%s\nplayers=%s\nTarget=%s\n}",
+        name, neighborsList, itemsList, playersList, character);
   }
 }
 

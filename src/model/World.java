@@ -41,5 +41,9 @@ public interface World {
   public String playerInfo(String playerName);
 
   public List<Player> getPlayers();
+
+  String movePet(String spaceName);
+
+  String wanderingPet();
 }
 
