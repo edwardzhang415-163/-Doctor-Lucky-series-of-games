@@ -8,8 +8,18 @@ import java.util.List;
  */
 public interface World {
 
+  /**
+   * Get the number of rows in the game src.world.
+   *
+   * @return The number of rows.
+   */
   int getNumRows();
 
+  /**
+   * Get the number of columns in the game src.world.
+   *
+   * @return The number of columns.
+   */
   int getNumCols();
 
   /**
