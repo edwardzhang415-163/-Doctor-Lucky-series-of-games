@@ -39,11 +39,11 @@ public class NextTurnCommand implements Command {
       out.append("turn ").append(String.valueOf(turn)).append("\n");
       for (Player player : world.getPlayers()) {
         out.append(String.format("Player %s turn", player.getName())).append("\n");
-        out.append(String.format("Player %s have items: ", player.getName(),
+        out.append(String.format("Player %s have items: %s", player.getName(),
             player.getItems().stream().map(Item::getName)
             .collect(Collectors.joining(",")))).append("\n");
         if ('p' == player.toString().charAt(0)) {
-          out.append(String.format("Select option:\n%s\n%s\n%s\nn%s\n%s\n",
+          out.append(String.format("Select option:\n%s\n%s\n%s\n%s\n%s\n",
               "1.look around.",
               "2.move to neighbor space.",
               "3.pick up items.",
@@ -88,12 +88,12 @@ public class NextTurnCommand implements Command {
               break;
           }
         } else {
-          out.append("botplayer do action automaticallly\n");
+          out.append("\nbotplayer do action automaticallly\n");
           out.append(player.doAction()).append("\n");
         }
       }
       out.append(world.moveCharacter()).append("\n");
-      out.append(world.wanderingPet()).append("\n");
+      out.append(world.getPet().wandering()).append("\n");
       out.append("this turn is end\n");
       if (turn == maxTurn) {
         out.append("Target escaped! game over\n");

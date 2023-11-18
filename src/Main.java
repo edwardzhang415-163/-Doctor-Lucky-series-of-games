@@ -25,7 +25,6 @@ public class Main {
     System.out.println(String.format("Masion name: %s ", world.getName()));
     System.out.println("Please provide max turn number.");
     int maxTurns = scanner.nextInt();
-
     //controller
     GameController
         controller = new GameController(new InputStreamReader(System.in), System.out, maxTurns);

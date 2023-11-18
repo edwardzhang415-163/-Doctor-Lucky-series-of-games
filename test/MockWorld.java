@@ -19,6 +19,7 @@ import src.model.Character;
 import src.model.Item;
 import src.model.MyWorldCharacter;
 import src.model.MyWorldItem;
+import src.model.MyWorldPet;
 import src.model.MyWorldPlayer;
 import src.model.MyWorldSpace;
 import src.model.Player;
@@ -36,7 +37,8 @@ public class MockWorld implements World {
   private List<Space> spaces; // Stores all the space information
   private Character character; // Stores character information
   private List<Item> items;
-
+  private StringBuilder log;
+  private MyWorldPet pet;
 
 
   private List<Player> players;
@@ -48,6 +50,7 @@ public class MockWorld implements World {
    */
 
   public MockWorld(String filename) {
+    this.log = new StringBuilder();
     BufferedReader br;
     try {
       br = new BufferedReader(new FileReader(filename));
@@ -62,6 +65,7 @@ public class MockWorld implements World {
     int spaceNumber = 0;
     int health = 0;
     String characterName = "";
+    String petName = "";
     int numItems = 0;
     List<Space> spacesN = new ArrayList<>();
     List<Item> itemsN = new ArrayList<>();
@@ -77,14 +81,16 @@ public class MockWorld implements World {
           health = Integer.parseInt(tokens[0]);
           characterName = tokens[1];
         } else if (lineNumber == 2) {
+          petName = line;
+        } else if (lineNumber == 3) {
           spaceNumber = Integer.parseInt(line);
-        } else if (lineNumber <= spaceNumber + 2) {
+        } else if (lineNumber <= spaceNumber + 3) {
           String[] tokens = line.trim().split("\\s+", 5);
           spacesN.add(new MyWorldSpace(Integer.parseInt(tokens[0]), Integer.parseInt(tokens[1]),
               Integer.parseInt(tokens[2]) + 1, Integer.parseInt(tokens[3]) + 1, tokens[4]));
-        } else if (lineNumber == spaceNumber + 3) {
+        } else if (lineNumber == spaceNumber + 4) {
           numItems = Integer.parseInt(line);
-        }  else if (lineNumber <= spaceNumber + 3 + numItems) {
+        }  else if (lineNumber <= spaceNumber + 4 + numItems) {
           String[] tokens = line.split(" ", 3);
           itemsN.add(new MyWorldItem(Integer.parseInt(tokens[0]),
               Integer.parseInt(tokens[1]), tokens[2]));
@@ -96,8 +102,8 @@ public class MockWorld implements World {
       this.name = worldName;
       this.spaces = spacesN;
       this.character = new MyWorldCharacter(health, characterName, 0, spaceNumber - 1);
+      this.pet = new MyWorldPet(petName, spacesN.get(0), spaceNumber - 1);
       this.items = itemsN;
-      this.spaces = spacesN;
     } catch (IOException e) {
       System.out.println(lineNumber);
       e.printStackTrace();
@@ -112,16 +118,19 @@ public class MockWorld implements World {
 
   @Override
   public int getNumRows() {
+    this.log.append("getNumRows\n");
     return numRows;
   }
 
   @Override
   public int getNumCols() {
+    this.log.append("getNumCols\n");
     return numCols;
   }
 
   @Override
   public String getName() {
+    this.log.append("getName\n");
     return name;
   }
 
@@ -132,6 +141,7 @@ public class MockWorld implements World {
    */
   @Override
   public List<Space> getSpaces() {
+    this.log.append("getSpaces\n");
     return spaces;
   }
 
@@ -142,11 +152,13 @@ public class MockWorld implements World {
    */
   @Override
   public Character getCharacter() {
+    this.log.append("getCharacter\n");
     return character;
   }
 
   @Override
   public List<Item> getItems() {
+    this.log.append("getItems\n");
     return items;
   }
 
@@ -157,6 +169,7 @@ public class MockWorld implements World {
    */
   @Override
   public BufferedImage renderWorldImage() {
+    this.log.append("renderWorldImage\n");
     int numRowsN = getNumRows(); // Get the number of rows in the src.world
     int numColsN = getNumCols(); // Get the number of columns in the src.world
     int cellSize = 50; // Size of each cell in pixels
@@ -203,25 +216,45 @@ public class MockWorld implements World {
 
   @Override
   public String moveCharacter() {
+    this.log.append("moveCharacter\n");
     character.moveSpace();
-    return String.format("Character is now in %s",
+    return String.format("Character moved to %s",
         spaces.get(character.getCurrentRoomIndex()).getName());
   }
 
   @Override
   public Space getSpace(int spaceIndex) {
+    this.log.append("getSpace\n");
     return spaces.get(spaceIndex);
+  }
+
+
+  @Override
+  public String movePet(String spaceName) {
+    for (Space space : spaces) {
+      if (space.getName().equals(spaceName)) {
+        pet.setCurrentSpace(space);
+        return String.format("Pet is now in %s", spaceName);
+      }
+    }
+    return "There is no such space in this world";
+  }
+
+  @Override
+  public MyWorldPet getPet() {
+    return pet;
   }
 
   @Override
   public String addPlayer(String playerName, int initialSpaceIndex, boolean isBot) {
+    this.log.append("addPlayer\n");
     if (initialSpaceIndex >= 0 && initialSpaceIndex < spaces.size()) {
       Player player;
       Space initialSpace = spaces.get(initialSpaceIndex);
       if (isBot) {
-        player = new BotPlayer(playerName, initialSpace);
+        player = new BotPlayer(playerName, initialSpace, this);
       } else {
-        player = new MyWorldPlayer(playerName, initialSpace);
+        player = new MyWorldPlayer(playerName, initialSpace, this);
       }
       for (Player p : players) {
         if (p.getName().equals(playerName)) {
@@ -238,6 +271,7 @@ public class MockWorld implements World {
 
   @Override
   public String playerInfo(String playerName) {
+    this.log.append("playerInfo\n");
     for (Player player : players) {
       if (player.getName().equals(playerName)) {
         return player.toString();
@@ -248,6 +282,7 @@ public class MockWorld implements World {
 
   @Override
   public List<Player> getPlayers() {
+    this.log.append("getPlayers\n");
     return players;
   }
 
@@ -332,6 +367,7 @@ public class MockWorld implements World {
 
   @Override
   public String toString() {
+    this.log.append("toString\n");
     String spacesList = spaces.stream()
         .map(Space::getName)
         .collect(Collectors.joining(",\n"));

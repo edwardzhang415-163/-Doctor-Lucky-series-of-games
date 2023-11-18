@@ -1,6 +1,6 @@
 package src.model;
 
-public interface Pet {
+interface Pet {
 
   /**
    * Gets the name of the character.
@@ -14,14 +14,18 @@ public interface Pet {
    *
    * @return The current room index.
    */
-  int getCurrentRoomIndex();
+  Space getCurrentSpace();
 
   /**
    * Sets the current room index where the character is located.
    *
-   * @param roomIndex The new room index.
+   * @param currentSpaceN The current room index.
    */
-  void setCurrentRoomIndex(int roomIndex);
+  void setCurrentSpace(Space currentSpaceN);
+
+  String wandering();
+
+  void refresh();
 
 
 }

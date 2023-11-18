@@ -11,5 +11,6 @@ public class TargetInfoCommand implements Command {
   @Override
   public void execute(World world, Scanner scanner, Appendable out) throws IOException {
     out.append(world.getCharacter().toString()).append("\n");
+    out.append(world.getPet().toString()).append("\n");
   }
 }

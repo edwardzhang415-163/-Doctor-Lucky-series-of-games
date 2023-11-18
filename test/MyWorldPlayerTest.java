@@ -7,9 +7,12 @@ import static org.junit.Assert.assertNotNull;
 import org.junit.Before;
 import org.junit.Test;
 import src.model.Item;
+import src.model.MyWorld;
 import src.model.MyWorldItem;
+import src.model.MyWorldPet;
 import src.model.MyWorldPlayer;
 import src.model.MyWorldSpace;
+import src.model.Player;
 import src.model.Space;
 
 /**
@@ -19,11 +22,17 @@ public class MyWorldPlayerTest {
 
   private MyWorldPlayer player;
   private Space space;
+  private MyWorld myWorld;
 
+  /**
+   * Sets up the test fixture.
+   * Called before every test case method.
+   */
   @Before
   public void setUp() {
+    myWorld = new MyWorld("res\\mansion.txt");
     space = new MyWorldSpace(0, 0, 1, 1, "Space1");
-    player = new MyWorldPlayer("Player1", space);
+    player = new MyWorldPlayer("Player1", myWorld.getSpaces().get(0), myWorld);
   }
 
   @Test
@@ -110,5 +119,50 @@ public class MyWorldPlayerTest {
     String result = player.toString();
     assertNotNull(result);
     assertEquals("player{\nname='Player1'\nitems=\ncurrentSpace=Space1\n}", result);
+  }
+
+  @Test
+  public void attackTarget_WhenNoWeapon_ReturnsFailedMessage() {
+    Player player2 = new MyWorldPlayer("Player2", player.getCurrentSpace().getNeighbors().get(0),
+        myWorld);
+    myWorld.addPlayer("player2", 1, true);
+    // Attacking without having a weapon
+    assertEquals("Player Player1 attacked Enemy but failed.", player.attackTarget());
+  }
+
+  @Test
+  public void attackTarget_WithWeapon_Succeeds() {
+    // Adding a weapon to the player
+    Item weapon = new MyWorldItem(1, 2, "Sword");
+    player.getItems().add(weapon);
+
+    // Attacking with the equipped weapon
+    assertEquals("Player Player1 attacked Enemy with Sword and damaged 2", player.attackTarget());
+  }
+
+  @Test
+  public void attackTarget_WithMultipleWeapons_SucceedsWithStrongest() {
+
+
+    // Adding multiple weapons to the player
+    Item weakWeapon = new MyWorldItem(1, 1, "sword");
+    Item strongWeapon = new MyWorldItem(1, 3, "Dagger");
+    myWorld.getCharacter().setCurrentRoomIndex(0);
+    player.getItems().add(strongWeapon);
+
+    // Attacking with multiple weapons, should use the stronger one
+    assertEquals("Player Player1 attacked Enemy with Sword and damaged 3", player.attackTarget());
+  }
+
+  @Test
+  public void movePet_MoveToValidSpace_SuccessfullyMovesPet() {
+    MyWorldPet pet = new MyWorldPet("Pet", space, 3);
+    assertEquals("Pet is now in Library", player.movePet("Library"));
+  }
+
+  @Test
+  public void movePet_MoveToInvalidSpace_ReturnsErrorMessage() {
+    MyWorldPet pet = new MyWorldPet("Pet", space, 3);
+    assertEquals("There is no such space in this world", player.movePet("Space C"));
   }
 }

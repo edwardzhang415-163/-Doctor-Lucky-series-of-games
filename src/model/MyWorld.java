@@ -66,10 +66,9 @@ public class MyWorld implements World {
           String[] tokens = line.trim().split("\\s+", 2);
           health = Integer.parseInt(tokens[0]);
           characterName = tokens[1];
-        } else if (lineNumber == 2){
+        } else if (lineNumber == 2) {
           petName = line;
-        }
-        else if (lineNumber == 3) {
+        } else if (lineNumber == 3) {
           spaceNumber = Integer.parseInt(line);
         } else if (lineNumber <= spaceNumber + 3) {
           String[] tokens = line.trim().split("\\s+", 5);
@@ -89,8 +88,10 @@ public class MyWorld implements World {
       this.name = worldName;
       this.spaces = spacesN;
       this.character = new MyWorldCharacter(health, characterName, 0, spaceNumber - 1);
-      this.pet = new MyWorldPet(petName);
+      this.pet = new MyWorldPet(petName, spacesN.get(0), spaceNumber - 1);
       this.items = itemsN;
+      spaces.get(0).addCharacter(character);
+      spaces.get(0).addPet(pet);
     } catch (IOException e) {
       System.out.println(lineNumber);
       e.printStackTrace();
@@ -136,6 +137,11 @@ public class MyWorld implements World {
   @Override
   public Character getCharacter() {
     return character;
+  }
+
+  @Override
+  public MyWorldPet getPet() {
+    return pet;
   }
 
   @Override
@@ -196,8 +202,10 @@ public class MyWorld implements World {
 
   @Override
   public String moveCharacter() {
+    spaces.get(character.getCurrentRoomIndex()).removeCharacter();
     character.moveSpace();
-    return String.format("Character is now in %s",
+    spaces.get(character.getCurrentRoomIndex()).addCharacter(character);
+    return String.format("Target moved to %s",
             spaces.get(character.getCurrentRoomIndex()).getName());
   }
 
@@ -205,16 +213,12 @@ public class MyWorld implements World {
   public String movePet(String spaceName) {
     for (Space space : spaces) {
       if (space.getName().equals(spaceName)) {
-        pet.setCurrentRoomIndex(spaces.indexOf(space));
-        return String.format("Pet is now in %s", spaceName);
+        pet.setCurrentSpace(space);
+        pet.refresh();
+        return String.format("Pet teleported to %s", spaceName);
       }
     }
     return "There is no such space in this world";
-  }
-
-  @Override
-  public String wanderingPet() {
-    return pet.toString();
   }
 
   @Override
@@ -252,7 +256,7 @@ public class MyWorld implements World {
         return player.toString();
       }
     }
-    return "there is no such player in this src.world";
+    return "there is no such player in this world\n";
   }
 
   @Override
@@ -364,18 +368,18 @@ public class MyWorld implements World {
   public String toString() {
     String spacesList = spaces.stream()
         .map(Space::getName)
-        .collect(Collectors.joining(",\n"));
+        .collect(Collectors.joining(", "));
 
     String itemsList = items.stream()
         .map(Item::getName)
-        .collect(Collectors.joining(",\n"));
+        .collect(Collectors.joining(", "));
 
     String playersList = players.stream()
             .map(Player::getName)
-            .collect(Collectors.joining(",\n"));
+            .collect(Collectors.joining(", "));
 
-    return String.format("%s{\nspaces=\n%s\ntarget=%s\nitems=\n%s\nplayers=\n%s\n}",
-        name, spacesList, character.getName(), itemsList, playersList);
+    return String.format("%s{\ntarget=%s\npet=%s\nspaces=\n%s\nitems=\n%s\nplayers=\n%s}",
+        name, character.getName(), pet.getName(), spacesList, itemsList, playersList);
   }
 }
 

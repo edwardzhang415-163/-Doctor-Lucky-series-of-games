@@ -52,7 +52,10 @@ public class GameController implements Controller {
   @Override
   public void start(World world) {
     try (Scanner scanner = new Scanner(this.in)) {
+      out.append("game start!");
       while (true) {
+        scanner.nextLine();
+        scanner.nextLine();
         out.append(String.format("Select option:\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n",
             "1.Output the world to an image file.",
             "2.Move target.",
@@ -70,7 +73,7 @@ public class GameController implements Controller {
           try {
             command.execute(world, scanner, out);
           } catch (InputMismatchException e) {
-            out.append("invalid writing try again");
+            out.append("invalid writing try again\n");
           }
         } else {
           out.append("Invalid option, please try again\n");

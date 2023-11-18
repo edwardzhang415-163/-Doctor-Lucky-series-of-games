@@ -19,7 +19,7 @@ public class MyWorldSpace  implements Space {
   private  List<Space> neighbors;
   private  List<Item> items;
   private  List<Player> players;
-  private String character ;
+  private String character;
   private String pet;
   /**
    * Creates a new space with the specified coordinates, name, neighbors, and items.
@@ -193,14 +193,12 @@ public class MyWorldSpace  implements Space {
             && upperLeftCol == that.upperLeftCol
             && lowerRightRow == that.lowerRightRow
             && lowerRightCol == that.lowerRightCol
-            && Objects.equals(name, that.name)
-            && Objects.equals(neighbors, that.neighbors)
-            && Objects.equals(items, that.items);
+            && Objects.equals(name, that.name);
   }
 
   @Override
   public String scope() {
-    if ("".equals(pet)){
+    if (!"".equals(pet)) {
       return String.format("Space{\nname='%s', other invisible}",
           name);
     }
@@ -218,7 +216,7 @@ public class MyWorldSpace  implements Space {
   @Override
   public int hashCode() {
     return Objects.hash(upperLeftRow, upperLeftCol, lowerRightRow,
-            lowerRightCol, name, neighbors, items);
+            lowerRightCol);
   }
 
   @Override
@@ -236,8 +234,8 @@ public class MyWorldSpace  implements Space {
             .map(Player::getName)
             .collect(Collectors.joining(", "));
 
-    return String.format("Space{\nname='%s'\nneighbors=%s\nitems=%s\nplayers=%s\nTarget=%s\n}",
-        name, neighborsList, itemsList, playersList, character);
+    return String.format("Space{\nname='%s'\nneighbors=%s\nitems=%s\nplayers=%s\nTarget=%s\nPet"
+            + "=%s\n}", name, neighborsList, itemsList, playersList, character, pet);
   }
 }
 

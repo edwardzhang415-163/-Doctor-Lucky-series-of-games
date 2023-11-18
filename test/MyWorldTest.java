@@ -27,7 +27,7 @@ public class MyWorldTest {
 
   @Before
   public void setUp() {
-    myWorld = new MyWorld("src/test/resources/world.txt");
+    myWorld = new MyWorld("res/mansion.txt");
   }
 
   @Test
@@ -100,6 +100,8 @@ public class MyWorldTest {
     assertNotNull(result);
     assertTrue(result.contains("there is no such player in this world"));
   }
+
+
 
   @Test
   public void testEqualsAndHashCode() {

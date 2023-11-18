@@ -75,8 +75,8 @@ public class MyWorldPlayer implements Player {
         .collect(Collectors.joining(", "));
     String nighbours = currentSpace.getNeighbors().stream().map(Space::scope)
             .collect(Collectors.joining(", "));
-    return String.format("Player %s is in %s.\n space have items: %s.\n space have playlers: %s.\n " +
-            "Player %s can go to: %s",
+    return String.format("Player %s is in %s.\n space have items: %s\n space have playlers: %s\n"
+            + "Player %s can go to: %s",
             name, currentSpace.getName(), items, players, name, nighbours);
   }
 
@@ -86,14 +86,15 @@ public class MyWorldPlayer implements Player {
   }
 
   @Override
-  public String attackTarget(){
+  public String attackTarget() {
     int damage = 1;
     Item weapon = null;
-    StringBuilder result = new StringBuilder();
-    List<Player> nighbourPlayers = currentSpace.getNeighbors().stream()
+    List<Player> nighbourPlayers;
+    Character character = world.getCharacter();
+    nighbourPlayers = currentSpace.getNeighbors().stream()
         .flatMap(space -> space.getPlayers().stream())
         .collect(Collectors.toList());
-    if ("".equals(currentSpace.getCharacter())){
+    if ("".equals(currentSpace.getCharacter())) {
       return "There is no target";
     }
     for (Item item : items) {
@@ -102,19 +103,23 @@ public class MyWorldPlayer implements Player {
         weapon = item;
       }
     }
+    StringBuilder result = new StringBuilder();
     result.append(String.format("Player %s attacked %s ", name, currentSpace.getCharacter()));
-    if (weapon != null){
+    if (weapon != null) {
       result.append(String.format("with %s ", weapon.getName()));
       removeItem(weapon);
     }
-    if(nighbourPlayers.size()!=0){
-      return result.append("but failed.").toString();
+    if (nighbourPlayers.size() != 0) {
+      return result.append("but failed. Target damage : ").append(character.getHealth()).toString();
     }
-    return result.append(String.format("and damaged %s ", weapon.getDamage())).toString();
+    character.hurt(damage);
+    return result.append(String.format("and damaged %s. Target damage : %s  ",
+        damage, character.getHealth())).toString();
   }
 
   private String removeItem(Item item) {
     items.remove(item);
+    world.getItems().remove(item);
     return String.format("Player %s removed %s", name, item.getName());
   }
 

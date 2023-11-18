@@ -14,9 +14,19 @@ When you run the project, you will see the game world displayed in a window. You
 
 The game world is loaded from a text file with the following format:
 
+### Assumpiton
+- The game world is a rectangular grid of spaces.
+- The character can move to any space that is not a wall.
+- the pet will travese the world whith dfs algorithm.
+
+### Limitations
+- The player can only move to a space that is adjacent to the space it is currently in.
+- The pet can only move to a space that is adjacent to the space it is currently in.
+
 ```
 <numRows> <numCols> <name>
 <character_health> <character_name> <row1> <col1> <row2> <col2>
+<pet_name>
 <space_0_0> <space_0_1> ... <space_0_numCols-1>
 <space_1_0> <space_1_1> ... <space_1_numCols-1>
 ...
@@ -44,32 +54,43 @@ The game world is loaded from a text file with the following format:
 - And put the mansion.txt  in the res directory.
 - See examplerun.txt.
 ## examplerun
-- res\mansion.txt
+```
 - 1
-- 2
-- 3
-- 1
+-
 - 4
+-
 - 5
-- 7
-- player1
-- 1
-- false
-- 7
-- player1
-- 2
-- true
-- 6
-- player1
-- 8
-- 1
-- 2
+-
 - 3
+- 4
+-
+- 7
+- jack
+- 2
+- false
+-
+- 7
+- tom
+- 1
+- true
+-
+- 8
+- 3
+- Chain Saw
+- 8
+- 5
+-
+- 6
+- jack
+-
+- 8
+- 5
+-
 - 8
 - 1
-- 2
-- 1
+-
 - q
+```
 
 
 

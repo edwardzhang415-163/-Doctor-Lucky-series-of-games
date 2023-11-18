@@ -33,12 +33,12 @@ public interface Character {
    */
   void setCurrentRoomIndex(int roomIndex);
 
-  public int getMaxIndex();
+  int getMaxIndex();
 
-  public void setMaxIndex(int maxIndex);
+  void setMaxIndex(int maxIndex);
 
-  public int moveSpace();
+  int moveSpace();
 
-  public int hurt( int damage);
+  int hurt(int damage);
 }
 

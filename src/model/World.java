@@ -8,9 +8,9 @@ import java.util.List;
  */
 public interface World {
 
-  public int getNumRows();
+  int getNumRows();
 
-  public int getNumCols();
+  int getNumCols();
 
   /**
    * Get all the spaces in the game src.world.
@@ -26,24 +26,25 @@ public interface World {
    */
   Character getCharacter();
 
-  public List<Item> getItems();
+  MyWorldPet getPet();
 
-  public BufferedImage renderWorldImage();
+  List<Item> getItems();
 
-  public String getName();
+  BufferedImage renderWorldImage();
 
-  public String moveCharacter();
+  String getName();
 
-  public Space getSpace(int spaceIndex);
+  String moveCharacter();
 
-  public String addPlayer(String playerName, int initialSpaceIndex, boolean isBot);
+  Space getSpace(int spaceIndex);
 
-  public String playerInfo(String playerName);
+  String addPlayer(String playerName, int initialSpaceIndex, boolean isBot);
 
-  public List<Player> getPlayers();
+  String playerInfo(String playerName);
+
+  List<Player> getPlayers();
 
   String movePet(String spaceName);
-
-  String wanderingPet();
+  
 }
 

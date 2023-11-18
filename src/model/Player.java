@@ -6,23 +6,68 @@ import java.util.List;
  * Represents a player in the game.
  */
 public interface Player {
-  public String getName();
+  /**
+   * Returns the name of the player.
+   *
+   * @return The name of the player.
+   */
+  String getName();
 
-  public String pickupItems(String itemName);
+  /**
+   * Returns the current space of the player.
+   *
+   * @return The current space of the player.
+   */
+  String pickupItems(String itemName);
 
-  public Space getCurrentSpace();
+  /**
+   * Returns the current space of the player.
+   *
+   * @return The current space of the player.
+   */
+  Space getCurrentSpace();
 
-  public String moveTo(String nighbourName);
+  /**
+   * Returns the current space of the player.
+   *
+   * @return The current space of the player.
+   */
+  String moveTo(String nighbourName);
 
-  public String lookAround();
+  /**
+   * Returns the current space of the player.
+   *
+   * @return The current space of the player.
+   */
+  String lookAround();
 
-  public List<Item> getItems();
+  /**
+   * Returns the current space of the player.
+   *
+   * @return The current space of the player.
+   */
+  List<Item> getItems();
 
-  public String attackTarget();
+  /**
+   * Returns the current space of the player.
+   *
+   * @return The current space of the player.
+   */
+  String attackTarget();
 
+  /**
+   * Returns the current space of the player.
+   *
+   * @return The current space of the player.
+   */
   String movePet(String spaceName);
 
-  public String doAction();
+  /**
+   * Returns the current space of the player.
+   *
+   * @return The current space of the player.
+   */
+  String doAction();
 
 
 

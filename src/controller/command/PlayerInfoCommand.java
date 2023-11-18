@@ -13,6 +13,6 @@ public class PlayerInfoCommand implements Command {
     out.append("please provide player name\n");
     scanner.nextLine();
     String playerName = scanner.nextLine();
-    out.append(world.playerInfo(playerName)).append("\n");
+    out.append(world.playerInfo(playerName));
   }
 }

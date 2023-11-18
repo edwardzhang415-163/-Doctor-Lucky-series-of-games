@@ -9,6 +9,7 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 import src.model.Item;
+import src.model.MyWorld;
 import src.model.MyWorldItem;
 import src.model.MyWorldPlayer;
 import src.model.MyWorldSpace;
@@ -24,11 +25,17 @@ public class MyWorldSpaceTest {
 
   private MyWorldSpace space;
   private MyWorldSpace neighbor;
+  private MyWorld myWorld;
 
+  /**
+   * Sets up the test fixture.
+   * Called before every test case method.
+   */
   @Before
   public void setUp() {
     space = new MyWorldSpace(0, 0, 1, 1, "Space1");
     neighbor = new MyWorldSpace(0, 2, 1, 3, "Space2");
+    myWorld = new MyWorld("src/test/resources/world.txt");
   }
 
   @Test
@@ -89,14 +96,14 @@ public class MyWorldSpaceTest {
 
   @Test
   public void testAddPlayer() {
-    Player player = new MyWorldPlayer("Player1", space);
+    Player player = new MyWorldPlayer("Player1", space, myWorld);
     String result = space.addPlayer(player);
     assertEquals("player Player1 is added to Space1", result);
   }
 
   @Test
   public void testRemovePlayer() {
-    Player player = new MyWorldPlayer("Player1", space);
+    Player player = new MyWorldPlayer("Player1", space, myWorld);
     space.addPlayer(player);
     String result = space.removePlayer(player);
     assertEquals("player Player1 is removed from Space1", result);
@@ -104,7 +111,7 @@ public class MyWorldSpaceTest {
 
   @Test
   public void testRemoveNonExistingPlayer() {
-    Player player = new MyWorldPlayer("Player1", space);
+    Player player = new MyWorldPlayer("Player1", space, myWorld);
     String result = space.removePlayer(player);
     assertEquals("player Player1 is removed from Space1", result);
   }
