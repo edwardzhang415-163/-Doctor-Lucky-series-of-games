@@ -26,24 +26,74 @@ public interface World {
    */
   Character getCharacter();
 
+  /**
+   * Get the pet in the game src.world.
+   *
+   * @return The pet.
+   */
   MyWorldPet getPet();
 
+  /**
+   * Get the items in the game src.world.
+   *
+   * @return List of items.
+   */
   List<Item> getItems();
 
+  /**
+   * Get the item in the game src.world.
+   *
+   * @return The item.
+   */
   BufferedImage renderWorldImage();
 
+  /**
+   * Get the item in the game src.world.
+   *
+   * @return The item.
+   */
   String getName();
 
+  /**
+   * Get the item in the game src.world.
+   *
+   * @return The item.
+   */
   String moveCharacter();
 
+  /**
+   * Get the item in the game src.world.
+   *
+   * @return The item.
+   */
   Space getSpace(int spaceIndex);
 
+  /**
+   * Get the item in the game src.world.
+   *
+   * @return The item.
+   */
   String addPlayer(String playerName, int initialSpaceIndex, boolean isBot);
 
+  /**
+   * Get the item in the game src.world.
+   *
+   * @return The item.
+   */
   String playerInfo(String playerName);
 
+  /**
+   * Get the item in the game src.world.
+   *
+   * @return The item.
+   */
   List<Player> getPlayers();
 
+  /**
+   * Get the item in the game src.world.
+   *
+   * @return The item.
+   */
   String movePet(String spaceName);
   
 }

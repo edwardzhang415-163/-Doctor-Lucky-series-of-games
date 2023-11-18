@@ -23,8 +23,18 @@ interface Pet {
    */
   void setCurrentSpace(Space currentSpaceN);
 
+  /**
+   * Gets the current space where the character is located.
+   *
+   * @return The current space.
+   */
   String wandering();
 
+  /**
+   * Gets the current space where the character is located.
+   *
+   * @return The current space.
+   */
   void refresh();
 
 
