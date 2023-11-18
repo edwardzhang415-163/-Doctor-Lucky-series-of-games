@@ -24,7 +24,7 @@ public class BotPlayer extends MyWorldPlayer {
   public String doAction() {
     Random random = new Random();
     int action = random.nextInt(4);
-    if(getCurrentSpace().getItems().size() == 0) {
+    if (getCurrentSpace().getItems().size() == 0) {
       action = random.nextInt(3) + 1;
     }
     if (!"".equals(getCurrentSpace().getCharacter())) {

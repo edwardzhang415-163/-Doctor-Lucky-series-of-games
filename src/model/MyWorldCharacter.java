@@ -96,8 +96,8 @@ public class MyWorldCharacter implements Character {
   }
 
   @Override
-  public int hurt( int damage) {
-      health = health - damage;
+  public int hurt(int damage) {
+    health = health - damage;
     return health;
   }
 

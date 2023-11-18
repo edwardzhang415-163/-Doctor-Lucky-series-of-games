@@ -33,12 +33,33 @@ public interface Character {
    */
   void setCurrentRoomIndex(int roomIndex);
 
+  /**
+   * Gets the current space where the character is located.
+   *
+   * @return The current space.
+   */
   int getMaxIndex();
 
+  /**
+   * Sets the maximum room index allowed for the character.
+   *
+   * @param maxIndex The maximum room index.
+   * @throws IllegalArgumentException if maxIndex is less than startIndex.
+   */
   void setMaxIndex(int maxIndex);
 
+  /**
+   * Gets the current space where the character is located.
+   *
+   * @return The current space.
+   */
   int moveSpace();
 
+  /**
+   * Gets the current space where the character is located.
+   *
+   * @return The current space.
+   */
   int hurt(int damage);
 }
 

@@ -79,23 +79,73 @@ public interface Space {
    */
   void addItem(Item item);
 
+  /**
+   * Adds an item to this space.
+   *
+   * @param item The item to add to the space.
+   */
   String revomeItem(Item item);
 
+  /**
+   * Adds an item to this space.
+   *
+   * @param player The item to add to the space.
+   */
   String removePlayer(Player player);
-  
+
+  /**
+   * Adds an item to this space.
+   *
+   * @param player The item to add to the space.
+   */
   String addPlayer(Player player);
 
+  /**
+   * Gets the character in the space.
+   *
+   * @return The character in the space.
+   */
   List<Player> getPlayers();
 
+  /**
+   * Gets the character in the space.
+   *
+   * @return The character in the space.
+   */
   String scope();
 
+  /**
+   * Gets the character in the space.
+   *
+   * @return The character in the space.
+   */
   void addCharacter(Character character);
 
+  /**
+   * Gets the character in the space.
+   *
+   * @return The character in the space.
+   */
   void removeCharacter();
 
+  /**
+   * Gets the character in the space.
+   *
+   * @return The character in the space.
+   */
   void addPet(Pet pet);
 
+  /**
+   * Gets the character in the space.
+   *
+   * @return The character in the space.
+   */
   void removePet();
 
+  /**
+   * Gets the character in the space.
+   *
+   * @return The character in the space.
+   */
   String getCharacter();
 }
