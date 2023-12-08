@@ -20,7 +20,7 @@ import javax.imageio.ImageIO;
 /**
  * Represents the game src.world where spaces, items, and characters are placed.
  */
-public class MyWorld implements World {
+public class MyWorld implements World, ViewWorld {
   private int numRows;
   private int numCols;
   private String name;
@@ -177,6 +177,7 @@ public class MyWorld implements World {
       int height = space.getLowerRightRow() * cellSize - upperLeftY - 1;
       String spaceName = space.getName();
 
+
       // Draw space as a rectangle with black border and white fill color
       g2d.setColor(Color.BLACK);
       g2d.drawRect(upperLeftX, upperLeftY, width, height); // Draw black border
@@ -257,6 +258,12 @@ public class MyWorld implements World {
       }
     }
     return "there is no such player in this world\n";
+  }
+
+  @Override
+  public String targetInfo() {
+    return String.format("Target %s is in %s", character.getName(),
+        spaces.get(character.getCurrentRoomIndex()).getName());
   }
 
   @Override

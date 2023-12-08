@@ -15,13 +15,13 @@ When you run the project, you will see the game world displayed in a window. You
 The game world is loaded from a text file with the following format:
 
 ### Assumpiton
-- The game world is a rectangular grid of spaces.
-- The character can move to any space that is not a wall.
-- the pet will travese the world whith dfs algorithm.
+- When the game begins, the majority of the program's screen should show the graphical representation of the world along with a graphical representation of the the target character (but not the pet) and any players that have been added to the game.
+- The program display the name of the game world in the title bar of the window.
 
 ### Limitations
-- The player can only move to a space that is adjacent to the space it is currently in.
-- The pet can only move to a space that is adjacent to the space it is currently in.
+- The game support graphical representations of the target, and up to 10 players (in any 
+  combination of human and computer).
+- The game support up to 10 items.
 
 ```
 <numRows> <numCols> <name>

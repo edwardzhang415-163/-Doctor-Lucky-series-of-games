@@ -97,6 +97,9 @@ public interface World {
    *
    * @return The item.
    */
+
+  String targetInfo();
+
   List<Player> getPlayers();
 
   /**

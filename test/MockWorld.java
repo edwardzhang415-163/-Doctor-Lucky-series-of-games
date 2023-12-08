@@ -24,13 +24,14 @@ import src.model.MyWorldPlayer;
 import src.model.MyWorldSpace;
 import src.model.Player;
 import src.model.Space;
+import src.model.ViewWorld;
 import src.model.World;
 
 
 /**
  * tset the game src.world where spaces, items, and characters are placed.
  */
-public class MockWorld implements World {
+public class MockWorld implements World, ViewWorld {
   private int numRows;
   private int numCols;
   private String name;
@@ -350,6 +351,12 @@ public class MockWorld implements World {
         && lowerRightColA > upperLeftColB && lowerRightColA < lowerRightColB)
         || (lowerRightRowA > upperLeftRowB && lowerRightRowA < lowerRightRowB
         && upperLeftColA > upperLeftColB && upperLeftColA < lowerRightColB);
+  }
+
+  @Override
+  public String targetInfo() {
+    return String.format("Target %s is in %s", character.getName(),
+        spaces.get(character.getCurrentRoomIndex()).getName());
   }
 
   /**
