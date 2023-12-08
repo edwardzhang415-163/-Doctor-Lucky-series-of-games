@@ -135,6 +135,11 @@ public class WelcomeFrame extends JFrame {
     setVisible(true);
   }
 
+  /**
+   * Checks if the selected file and max turns are valid.
+   *
+   * @return true if the selected file and max turns are valid, false otherwise
+   */
   boolean checkSelectedFileAndMaxTurn() {
     if (world == null) {
       JOptionPane.showMessageDialog(null, "Please select a world file first!");

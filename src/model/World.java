@@ -100,6 +100,11 @@ public interface World {
 
   String targetInfo();
 
+  /**
+   * Get the item in the game src.world.
+   *
+   * @return The item.
+   */
   List<Player> getPlayers();
 
   /**

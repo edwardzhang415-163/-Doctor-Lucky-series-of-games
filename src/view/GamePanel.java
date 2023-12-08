@@ -169,7 +169,9 @@ public class GamePanel extends JPanel {
     return transparentButton;
   }
 
-
+  /**
+   * Updates the buttons.
+   */
   protected void updateButtons() {
     addTargetButton();
     addPlayerButton();

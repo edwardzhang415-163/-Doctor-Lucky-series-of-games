@@ -25,6 +25,11 @@ public class TextPanel extends JPanel {
 
   }
 
+  /**
+   * Updates the game output.
+   *
+   * @param format the format to update the game output
+   */
   public void updateGameOutput(String format) {
     outputTextArea.append(format + "\n");
   }
