@@ -169,7 +169,9 @@ public class GraphicalController implements Controller, Feature {
           }
         } else {
           JOptionPane.showMessageDialog(null, "\nbot player do action automatically\n");
-          view.getTextPanel().updateGameOutput(player.doAction());
+          String doAction = String.format("%s\n", player.doAction());
+          JOptionPane.showMessageDialog(null, doAction);
+          view.getTextPanel().updateGameOutput(doAction);
           if (world.getCharacter().getHealth() <= 0) {
             view.getTextPanel()
                 .updateGameOutput(String.format("%s win! game over\n", player.getName()));
@@ -180,11 +182,17 @@ public class GraphicalController implements Controller, Feature {
           view.refresh();
         }
       }
-      view.getTextPanel().updateGameOutput(world.moveCharacter() + "\n");
-      view.getTextPanel().updateGameOutput(world.getPet().wandering() + "\n");
+      String moveResult = world.moveCharacter();
+      JOptionPane.showMessageDialog(null, moveResult);
+      String wandering = world.getPet().wandering();
+      JOptionPane.showMessageDialog(null, wandering);
+      view.getTextPanel().updateGameOutput( moveResult + "\n");
+      view.getTextPanel().updateGameOutput(wandering + "\n");
+      JOptionPane.showMessageDialog(null, "this turn is end\n");
       view.getTextPanel().updateGameOutput("this turn is end\n");
       view.refresh();
       if (turn == maxTurns) {
+        JOptionPane.showMessageDialog(null, "Target escaped! game over\n");
         view.getTextPanel().updateGameOutput("Target escaped! game over\n");
       }
     } else {
