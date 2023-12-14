@@ -38,31 +38,26 @@ public class MockView extends GameView {
 
   @Override
   public void refresh() {
-    // Override refresh method if needed for testing
     super.refresh();
   }
 
   @Override
   public void updateGameOutput(String format) {
-    // Override updateGameOutput method if needed for testing
     super.updateGameOutput(format);
   }
 
   @Override
   public TextPanel getTextPanel() {
-    // Override getTextPanel method if needed for testing
     return super.getTextPanel();
   }
 
   @Override
   public void resetFocus() {
-    // Override resetFocus method if needed for testing
     super.resetFocus();
   }
 
   @Override
   public void makeVisible() {
-    // Override makeVisible method if needed for testing
     super.makeVisible();
   }
 }

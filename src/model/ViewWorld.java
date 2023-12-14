@@ -70,13 +70,6 @@ public interface ViewWorld {
    *
    * @return The item.
    */
-  String addPlayer(String playerName, int initialSpaceIndex, boolean isBot);
-
-  /**
-   * Get the item in the game src.world.
-   *
-   * @return The item.
-   */
   String playerInfo(String playerName);
 
   /**
